@@ -7,7 +7,7 @@ Type=simple
 User=__APP__
 Group=__APP__
 WorkingDirectory=__FINALPATH__/
-ExecStart=__FINALPATH__/bin/server >> /var/log/__APP__/__APP__.log 2>&1
+ExecStart=ts-node --project __FINALPATH__/tsconfig.json __FINALPATH__/bin/server.ts >> /var/log/__APP__/__APP__.log 2>&1
 
 [Install]
 WantedBy=multi-user.target

@@ -168,6 +168,10 @@ ynh_system_user_create $app
 # ...
 #=================================================
 
+ynh_install_nodejs
+ynh_use_nodejs
+npm install -g typescript
+
 #=================================================
 # SETUP SYSTEMD
 #=================================================

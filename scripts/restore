@@ -91,6 +91,10 @@ chown -R root: $final_path
 # Define and install dependencies
 #ynh_install_app_dependencies deb1 deb2
 
+ynh_install_nodejs
+ynh_use_nodejs
+npm install -g typescript
+
 #=================================================
 # RESTORE SYSTEMD
 #=================================================

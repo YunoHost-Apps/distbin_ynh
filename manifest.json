@@ -1,5 +1,5 @@
 {
-    "name": "YunoHost Distbin app",
+    "name": "Distbin",
     "id": "distbin",
     "packaging_format": 1,
     "description": {

@@ -169,9 +169,17 @@ ynh_system_user_create $app
 #=================================================
 
 ynh_install_nodejs 11
+
+pushd $final_path
 ynh_use_nodejs
-npm install -g typescript
-npm install -g ts-node
+npm install
+popd
+
+#npm audit fix
+#npm install -g npm-install-peers
+#npm-install-peers
+#npm install -g typescript
+#npm install -g ts-node
 
 #=================================================
 # SETUP SYSTEMD

@@ -244,8 +244,8 @@ ynh_add_systemd_config
 
 ### `ynh_replace_string` is used to replace a string in a file.
 ### (It's compatible with sed regular expressions syntax)
-
-#ynh_replace_string "match_string" "replace_string" "$final_path/CONFIG_FILE"
+cp ../conf/package.json "$final_path/package.json"
+ynh_replace_string "__PORT__" "$port" "$final_path/package.json"
 
 #=================================================
 # STORE THE CONFIG FILE CHECKSUM
@@ -256,7 +256,7 @@ ynh_add_systemd_config
 ### you can make a backup of this file before modifying it again if the admin had modified it.
 
 # Calculate and store the config file checksum into the app settings
-#ynh_store_file_checksum "$final_path/CONFIG_FILE"
+ynh_store_file_checksum "$final_path/package.json"
 
 #=================================================
 # GENERIC FINALIZATION
@@ -318,3 +318,4 @@ fi
 #=================================================
 
 systemctl reload nginx
+systemctl reload $app

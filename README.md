@@ -21,7 +21,7 @@ Quick description of this app.
 
 ## License
 
-**LICENSE:** Apache 2.0
+**LICENSE:** Apache-2.0
 
 ## Screenshots
 

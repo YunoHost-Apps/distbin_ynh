@@ -1,5 +1,5 @@
 [Unit]
-Description=Small description of the service
+Description=Distbin Service
 After=network.target
 
 [Service]

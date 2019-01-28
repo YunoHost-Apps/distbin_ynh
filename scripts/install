@@ -168,14 +168,15 @@ ynh_system_user_create $app
 # ...
 #=================================================
 
-ynh_install_nodejs 11
+ynh_install_nodejs 8
 
 pushd $final_path
 ynh_use_nodejs
 npm install hoek@^4.2.1 --save
 npm install
 npm audit fix
-npm install @types/node
+npm install typescript@>=2.0 --save
+npm install -g ts-node
 popd
 
 #npm audit fix
@@ -184,6 +185,7 @@ popd
 #npm install -g typescript
 #npm install -g ts-node
 #npm install typescript@>=2.0  --save
+#npm install @types/node
 
 #=================================================
 # SETUP SYSTEMD

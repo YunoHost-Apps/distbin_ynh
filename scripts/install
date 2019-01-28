@@ -319,3 +319,4 @@ fi
 #=================================================
 
 systemctl reload nginx
+systemctl start $app

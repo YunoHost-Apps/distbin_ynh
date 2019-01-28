@@ -168,7 +168,7 @@ ynh_system_user_create $app
 # ...
 #=================================================
 
-ynh_install_nodejs
+ynh_install_nodejs 11
 ynh_use_nodejs
 npm install -g typescript
 

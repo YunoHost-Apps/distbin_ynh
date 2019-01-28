@@ -93,7 +93,7 @@ chown -R root: $final_path
 
 ynh_install_nodejs 11
 ynh_use_nodejs
-npm install -g typescript
+npm install -g ts-node
 
 #=================================================
 # RESTORE SYSTEMD

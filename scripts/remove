@@ -100,7 +100,7 @@ fi
 #=================================================
 
 ynh_use_nodejs
-npm uninstall -g typescript
+npm uninstall -g ts-node
 ynh_remove_nodejs
 
 # Remove a cron file

@@ -99,12 +99,7 @@ fi
 # REMOVE THE CRON FILE
 #=================================================
 
-pushd $final_path
-ynh_use_nodejs
-npm uninstall
-popd
 ynh_remove_nodejs
-
 
 #npm uninstall -g ts-node
 #npm uninstall -g typescript

@@ -170,13 +170,15 @@ ynh_system_user_create $app
 
 ynh_install_nodejs 8
 
+chown -R $app $final_path
+
 pushd $final_path
 ynh_use_nodejs
 npm install hoek@^4.2.1 --save
 npm install
 npm audit fix
 npm install typescript@>=2.0 --save
-npm install -g ts-node
+npm install ts-node
 popd
 
 #npm audit fix
@@ -186,6 +188,7 @@ popd
 #npm install -g ts-node
 #npm install typescript@>=2.0  --save
 #npm install @types/node
+#(cd $final_path && npm install --only=production)
 
 #=================================================
 # SETUP SYSTEMD
@@ -203,6 +206,7 @@ popd
 ###		- And the section "SETUP SYSTEMD" in the upgrade script
 
 # Create a dedicated systemd config
+ynh_replace_string "__ENV_PATH__" "$PATH" "../conf/systemd.service"
 ynh_add_systemd_config
 
 #=================================================

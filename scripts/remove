@@ -114,7 +114,7 @@ fi
 ynh_secure_remove "/var/log/$app/"
 
 # remove tmp files
-ynh_secure_remove "/tmp/*"
+sudo -u $app "/tmp/*"
 ynh_secure_remove "/var/tmp/*"
 
 #=================================================

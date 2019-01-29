@@ -33,7 +33,7 @@ Quick description of this app.
 
 ## Configuration
 
-How to configure this app: by an admin panel, a plain file with SSH, or any other way.
+No configuration available for now.
 
 ## Documentation
 

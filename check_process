@@ -9,7 +9,7 @@
 		is_public=1	(PUBLIC|public=1|private=0)
 	; Checks
 		pkg_linter=1
-		setup_sub_dir=1
+		setup_sub_dir=0
 		setup_root=1
 		setup_nourl=0
 		setup_private=1
@@ -26,7 +26,8 @@
 	Level 3=auto
 # Level 4: If the app supports LDAP and SSOwat, turn level 4 to '1' and add a link to an issue or a part of your code to show it.
 # If the app does not use LDAP nor SSOwat, and can't use them, turn level 4 to 'na' and explain as well.
-	Level 4=0
+    # no ldap support
+	Level 4=na
 	Level 5=auto
 	Level 6=auto
 	Level 7=auto

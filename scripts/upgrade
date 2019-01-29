@@ -136,6 +136,7 @@ ynh_use_logrotate --non-append
 
 # Create a dedicated systemd config
 ynh_add_systemd_config
+systemctl start $app
 
 #=================================================
 # GENERIC FINALIZATION
@@ -166,4 +167,3 @@ fi
 #=================================================
 
 systemctl reload nginx
-systemctl start $app

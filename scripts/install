@@ -208,6 +208,7 @@ ynh_replace_string "res.writeHead(200)" "res.writeHead(200, {\"content-type\": \
 # Create a dedicated systemd config
 ynh_replace_string "__ENV_PATH__" "$PATH" "../conf/systemd.service"
 ynh_add_systemd_config
+systemctl start $app
 
 #=================================================
 # SETUP APPLICATION WITH CURL
@@ -316,4 +317,3 @@ fi
 #=================================================
 
 systemctl reload nginx
-systemctl start $app

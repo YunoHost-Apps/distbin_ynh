@@ -105,6 +105,7 @@ npm install -g ts-node
 
 ynh_restore_file "/etc/systemd/system/$app.service"
 systemctl enable $app.service
+systemctl start $app
 
 #=================================================
 # ADVERTISE SERVICE IN ADMIN PANEL
@@ -132,4 +133,3 @@ ynh_restore_file "/etc/logrotate.d/$app"
 
 #systemctl reload php5-fpm
 systemctl reload nginx
-systemctl start $app

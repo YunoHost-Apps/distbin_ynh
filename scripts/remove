@@ -113,6 +113,10 @@ fi
 # Remove the log files
 ynh_secure_remove "/var/log/$app/"
 
+# remove tmp files
+ynh_secure_remove "/tmp/*"
+ynh_secure_remove "/var/tmp/*"
+
 #=================================================
 # GENERIC FINALIZATION
 #=================================================

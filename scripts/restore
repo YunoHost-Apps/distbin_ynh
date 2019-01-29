@@ -76,6 +76,7 @@ ynh_system_user_create $app
 # Restore permissions on app files
 chown -R $app:$app $final_path
 
+mkdir /var/log/$app
 chown -R $app:$app /var/log/$app
 
 #=================================================
@@ -131,3 +132,4 @@ ynh_restore_file "/etc/logrotate.d/$app"
 
 #systemctl reload php5-fpm
 systemctl reload nginx
+systemctl start $app

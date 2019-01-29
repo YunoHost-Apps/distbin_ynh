@@ -172,6 +172,7 @@ ynh_install_nodejs 8
 
 chown -R $app:$app $final_path
 
+mkdir /var/log/$app
 chown -R $app:$app /var/log/$app
 
 pushd $final_path

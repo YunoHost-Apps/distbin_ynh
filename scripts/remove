@@ -47,7 +47,7 @@ ynh_remove_systemd_config
 
 # Remove metapackage and its dependencies
 #ynh_remove_app_dependencies
-
+ynh_use_nodejs
 ynh_remove_nodejs
 
 #=================================================

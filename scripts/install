@@ -184,9 +184,6 @@ npm install typescript@>=2.0 --save
 npm install ts-node
 popd
 
-#cp ../conf/package.json "$final_path/package.json"
-#ynh_replace_string "__PORT__" "$port" "$final_path/package.json"
-
 #Fix a error in the public page
 ynh_replace_string "res.writeHead(200)" "res.writeHead(200, {\"content-type\": \"text/html\",})" "$final_path/src/distbin-html/public.ts"
 

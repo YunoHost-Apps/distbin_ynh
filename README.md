@@ -1,7 +1,7 @@
 # Usage of this package (REMOVE THIS SECTION BEFORE RELEASE)
-- [ ] Copy this app before working on it.
-- [ ] Edit `conf/nginx.conf` file to match application prerequisites.
-- [ ] Edit `manifest.json` with application specific information.
+- [x] Copy this app before working on it.
+- [X] Edit `conf/nginx.conf` file to match application prerequisites.
+- [X] Edit `manifest.json` with application specific information.
 - [ ] Edit the `install`, `upgrade`, `remove`, `backup`, and `restore` scripts.
 - [ ] Add a `LICENSE` file for the package.
 - [ ] Edit `README.md`.
@@ -23,17 +23,13 @@ Quick description of this app.
 
 **LICENSE:** Apache-2.0
 
-## Screenshots
-
-![](Link to an screenshot for this app)
-
 ## Demo
 
-* [Official demo](Link to a demo site for this app)
+* [Official demo](https://distbin.com/)
 
 ## Configuration
 
-No configuration available for now.
+No configuration parameter available for now.
 
 ## Documentation
 
@@ -44,8 +40,8 @@ No configuration available for now.
 
 #### Multi-users support
 
-Are LDAP and HTTP auth supported?
-Can the app be used by multiple users?
+LDAP and HTTP are not supported
+The app be used by multiple users, anonymously.
 
 #### Supported architectures
 
@@ -55,14 +51,7 @@ Can the app be used by multiple users?
 
 ## Limitations
 
-* Any known limitations.
-
-## Additional information
-
-* Other information you would add about this application
-
-**More information on the documentation page:**  
-https://yunohost.org/packaging_apps
+* No known limitations.
 
 ## Links
 

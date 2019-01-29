@@ -3,8 +3,8 @@
     "id": "distbin",
     "packaging_format": 1,
     "description": {
-        "en": "Distbin package for YunoHost application.",
-        "fr": "Package d’application Distbin pour YunoHost."
+        "en": "Distributed pastebin with ActivityPub.",
+        "fr": "Pastebin distribué utilisant le protocole ActivityPub."
     },
     "version": "1.0~ynh1",
     "url": "https://example.com",

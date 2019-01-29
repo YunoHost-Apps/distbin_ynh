@@ -1,12 +1,4 @@
-# Usage of this package (REMOVE THIS SECTION BEFORE RELEASE)
-- [x] Copy this app before working on it.
-- [X] Edit `conf/nginx.conf` file to match application prerequisites.
-- [X] Edit `manifest.json` with application specific information.
-- [ ] Edit the `install`, `upgrade`, `remove`, `backup`, and `restore` scripts.
-- [ ] Add a `LICENSE` file for the package.
-- [ ] Edit `README.md`.
-
-# Distbin app for YunoHost
+# distbin app for YunoHost
 
 [![Integration level](https://dash.yunohost.org/integration/distbin.svg)](https://dash.yunohost.org/appci/app/distbin)  
 [![Install distbin with YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=distbin)
@@ -15,7 +7,9 @@
 If you don't have YunoHost, please see [here](https://yunohost.org/#/install) to know how to install and enjoy it.*
 
 ## Overview
-Quick description of this app.
+Post bin with distributed social features.
+
+A networked place to store posted web documents. This is meant to allow for distributed social commentary and reaction around these documents using best practices recommended or noted by the W3C Social Web Working Group.
 
 **Shipped version:** 1.0
 

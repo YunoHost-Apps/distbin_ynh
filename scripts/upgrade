@@ -92,6 +92,8 @@ ynh_add_nginx_config
 
 #ynh_install_app_dependencies deb1 deb2
 
+ynh_install_nodejs 8
+
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
@@ -112,10 +114,15 @@ ynh_system_user_create $app
 # ...
 #=================================================
 
-ynh_install_nodejs 11
+pushd $final_path
 ynh_use_nodejs
-npm install -g typescript
-npm install -g ts-node
+npm install hoek@^4.2.1 --save
+npm install
+npm audit fix
+npm install typescript@>=2.0 --save
+npm install ts-node
+popd
+
 
 ### Verify the checksum of a file, stored by `ynh_store_file_checksum` in the install script.
 ### And create a backup of this file if the checksum is different. So the file will be backed up if the admin had modified it.
@@ -167,3 +174,4 @@ fi
 #=================================================
 
 systemctl reload nginx
+sleep 10

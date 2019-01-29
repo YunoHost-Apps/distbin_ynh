@@ -147,7 +147,7 @@ ynh_add_systemd_config
 #chown -R root: $final_path
 chown -R $app:$app $final_path
 
-mkdir /var/log/$app
+mkdir -p /var/log/$app
 chown -R $app:$app /var/log/$app
 
 #=================================================

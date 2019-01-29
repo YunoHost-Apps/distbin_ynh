@@ -203,7 +203,7 @@ ynh_replace_string "res.writeHead(200)" "res.writeHead(200, {\"content-type\": \
 ###		- And the section "SETUP SYSTEMD" in the upgrade script
 
 # Create a dedicated systemd config
-ynh_replace_string "__ENV_PATH__" "$nodejs_path" "../conf/systemd.service"
+ynh_replace_string "__NODEJS_PATH__" "$nodejs_path" "../conf/systemd.service"
 ynh_add_systemd_config
 systemctl start $app
 

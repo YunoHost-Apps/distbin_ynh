@@ -311,4 +311,4 @@ fi
 #=================================================
 
 systemctl reload nginx
-sleep 10
+sleep 30

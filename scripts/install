@@ -80,7 +80,7 @@ ynh_app_setting_set $app is_public $is_public
 ###		- Remove the section "CLOSE A PORT" in the remove script
 
 # Find a free port
-port=$(ynh_find_port 8000)
+port=$(ynh_find_port 8095)
 # Open this port
 #yunohost firewall allow --no-upnp TCP $port 2>&1
 ynh_app_setting_set $app port $port
@@ -200,6 +200,7 @@ popd
 
 # Create a dedicated systemd config
 ynh_replace_string "__NODEJS_PATH__" "$nodejs_path" "../conf/systemd.service"
+ynh_replace_string "__PORT__" "$port" "../conf/systemd.service"
 ynh_add_systemd_config
 systemctl start $app
 

@@ -101,7 +101,7 @@ ynh_install_nodejs 8
 #=================================================
 
 # Create a dedicated user (if not existing)
-ynh_system_user_create $app $final_path
+ynh_system_user_create "$app" "$final_path"
 
 #=================================================
 # PHP-FPM CONFIGURATION

@@ -67,7 +67,7 @@ ynh_restore_file "$final_path"
 #=================================================
 
 # Create the dedicated user (if not existing)
-ynh_system_user_create $app
+ynh_system_user_create $app $final_path
 
 #=================================================
 # RESTORE USER RIGHTS

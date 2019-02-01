@@ -7,6 +7,7 @@
 #=================================================
 
 source _common.sh
+source ynh_systemd_action
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -58,9 +59,16 @@ ynh_backup_before_upgrade
 ynh_clean_setup () {
 	# restore it if the upgrade fails
 	ynh_restore_upgradebackup
+	ynh_clean_check_starting
 }
 # Exit if an error occurs during the execution of the script
 ynh_abort_if_errors
+
+#=================================================
+# STOP SERVICE
+#=================================================
+
+ynh_systemd_action --action=stop --service_name=$app
 
 #=================================================
 # CHECK THE PATH
@@ -74,8 +82,6 @@ path_url=$(ynh_normalize_url_path $path_url)
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-
-systemctl stop $app
 
 # Download, check integrity, uncompress and patch the source from app.src#
 #ynh_setup_source "$final_path"
@@ -148,7 +154,6 @@ ynh_replace_string "__NODEJS_PATH__" "$nodejs_path" "../conf/systemd.service"
 ynh_replace_string "__PORT__" "$port" "../conf/systemd.service"
 # Create a dedicated systemd config
 ynh_add_systemd_config
-systemctl start $app
 
 #=================================================
 # GENERIC FINALIZATION
@@ -179,4 +184,9 @@ fi
 #=================================================
 
 systemctl reload nginx
-sleep 30
+
+#=================================================
+# START SERVICE
+#=================================================
+
+ynh_systemd_action --action=start --service_name=$app

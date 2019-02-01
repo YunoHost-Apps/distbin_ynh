@@ -145,6 +145,7 @@ ynh_use_logrotate --non-append
 #=================================================
 ynh_use_nodejs
 ynh_replace_string "__NODEJS_PATH__" "$nodejs_path" "../conf/systemd.service"
+ynh_replace_string "__PORT__" "$port" "../conf/systemd.service"
 # Create a dedicated systemd config
 ynh_add_systemd_config
 systemctl start $app

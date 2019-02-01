@@ -67,14 +67,14 @@ ynh_restore_file "$final_path"
 #=================================================
 
 # Create the dedicated user (if not existing)
-ynh_system_user_create $app
+ynh_system_user_create "$app" "$final_path"
 
 #=================================================
 # RESTORE USER RIGHTS
 #=================================================
 
 # Restore permissions on app files
-chown -R $app:$app $final_path
+chown -R "$app":"$app" "$final_path"
 
 mkdir -p /var/log/$app
 chown -R $app:$app /var/log/$app

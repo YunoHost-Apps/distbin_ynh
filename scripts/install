@@ -318,4 +318,4 @@ systemctl reload nginx
 # START SERVICE
 #=================================================
 
-ynh_systemd_action --action=start --service_name=$app --line_match="Started Distbin Service"
+ynh_systemd_action --action=start --service_name=$app --line_match="Started Distbin Service" --log_path=/var/log/syslog

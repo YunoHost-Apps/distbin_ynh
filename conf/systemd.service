@@ -8,6 +8,7 @@ User=__APP__
 Group=__APP__
 Environment="PATH=__NODEJS_PATH__"
 Environment="PORT=__PORT__"
+Environment="DB_DIR=__FINALPATH__/db"
 WorkingDirectory=__FINALPATH__/
 ExecStart=/bin/sh -c '__FINALPATH__/node_modules/.bin/ts-node --project __FINALPATH__/tsconfig.json __FINALPATH__/bin/server.ts >> /var/log/__APP__/__APP__.log 2>&1'
 

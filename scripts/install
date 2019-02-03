@@ -191,6 +191,7 @@ pushd $final_path
     sudo -u $app env PATH=$PATH:$nodejs_path npm add hoek@^4.2.1 --save --production
     sudo -u $app env PATH=$PATH:$nodejs_path npm install ts-node
     sudo -u $app env PATH=$PATH:$nodejs_path npm install --production
+	sudo -u $app env PATH=$PATH:$nodejs_path npm audit fix
 popd
 
 #=================================================

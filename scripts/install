@@ -97,9 +97,12 @@ ynh_app_setting_set $app port $port
 ###		- As well as the section "REINSTALL DEPENDENCIES" in the restore script
 ###		- And the section "UPGRADE DEPENDENCIES" in the upgrade script
 
-#ynh_install_app_dependencies deb1 deb2
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 
 ynh_install_nodejs 8
+
+ynh_install_app_dependencies yarn
 
 #=================================================
 # CREATE A MYSQL DATABASE

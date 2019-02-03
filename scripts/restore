@@ -92,10 +92,12 @@ chown -R $app:$app /var/log/$app
 # REINSTALL DEPENDENCIES
 #=================================================
 
-# Define and install dependencies
-#ynh_install_app_dependencies deb1 deb2
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 
 ynh_install_nodejs 8
+
+ynh_install_app_dependencies yarn
 
 #=================================================
 # RESTORE SYSTEMD

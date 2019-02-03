@@ -92,10 +92,9 @@ chown -R $app:$app /var/log/$app
 # REINSTALL DEPENDENCIES
 #=================================================
 
-# Define and install dependencies
-#ynh_install_app_dependencies deb1 deb2
-
 ynh_install_nodejs 8
+
+#ynh_install_app_dependencies
 
 #=================================================
 # RESTORE SYSTEMD

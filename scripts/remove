@@ -102,9 +102,6 @@ fi
 # REMOVE THE CRON FILE
 #=================================================
 
-#npm uninstall -g ts-node
-#npm uninstall -g typescript
-
 # Remove a cron file
 #ynh_secure_remove "/etc/cron.d/$app"
 

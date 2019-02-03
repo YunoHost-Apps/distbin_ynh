@@ -49,7 +49,6 @@ ynh_remove_systemd_config
 ynh_use_nodejs
 ynh_remove_nodejs
 ynh_remove_app_dependencies
-rm -rf "/etc/apt/sources.list.d/yarn.list"
 
 #=================================================
 # REMOVE THE MYSQL DATABASE

@@ -16,7 +16,6 @@ source /usr/share/yunohost/helpers
 
 ynh_clean_setup () {
 	### Remove this function if there's nothing to clean before calling the remove script.
-	read -p "Press any key..."
 	ynh_clean_check_starting
 }
 # Exit if an error occurs during the execution of the script
@@ -99,8 +98,6 @@ ynh_app_setting_set $app port $port
 ###		- And the section "UPGRADE DEPENDENCIES" in the upgrade script
 
 ynh_install_nodejs 8
-
-#ynh_install_app_dependencies
 
 #=================================================
 # CREATE A MYSQL DATABASE

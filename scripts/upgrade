@@ -101,9 +101,8 @@ ynh_add_nginx_config
 # UPGRADE DEPENDENCIES
 #=================================================
 
+#ynh_install_app_dependencies deb1 deb2
 ynh_install_nodejs 8
-
-#ynh_install_app_dependencies
 
 #=================================================
 # CREATE DEDICATED USER
@@ -157,10 +156,10 @@ ynh_use_logrotate --non-append
 #=================================================
 # SETUP SYSTEMD
 #=================================================
-ynh_use_nodejs
+
+# Create a dedicated systemd config
 ynh_replace_string "__NODEJS_PATH__" "$nodejs_path" "../conf/systemd.service"
 ynh_replace_string "__PORT__" "$port" "../conf/systemd.service"
-# Create a dedicated systemd config
 ynh_add_systemd_config
 
 #=================================================

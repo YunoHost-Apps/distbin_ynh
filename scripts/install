@@ -209,6 +209,7 @@ popd
 # Create a dedicated systemd config
 ynh_replace_string "__NODEJS_PATH__" "$nodejs_path" "../conf/systemd.service"
 ynh_replace_string "__PORT__" "$port" "../conf/systemd.service"
+ynh_replace_string "__DOMAIN_URI__" "$domain$path_url" "../conf/systemd.service"
 ynh_add_systemd_config
 
 #=================================================

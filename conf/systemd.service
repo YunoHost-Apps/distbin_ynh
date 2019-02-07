@@ -10,7 +10,6 @@ Environment="PATH=__NODEJS_PATH__"
 Environment="PORT=__PORT__"
 Environment="DB_DIR=__FINALPATH__/db"
 Environment="EXTERNAL_URL=https://__DOMAIN_URI__"
-Environment="NODE_TLS_REJECT_UNAUTHORIZED=0"
 Environment="NODE_ENV=production"
 WorkingDirectory=__FINALPATH__/
 ExecStart=/bin/sh -c '__FINALPATH__/node_modules/.bin/ts-node --project __FINALPATH__/tsconfig.json __FINALPATH__/bin/server.ts >> /var/log/__APP__/__APP__.log 2>&1'

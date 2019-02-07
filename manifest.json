@@ -10,9 +10,7 @@
     "url": "https://example.com",
     "license": "Apache-2.0",
     "maintainer": {
-        "name": "John doe",
-        "email": "john.doe@example.com",
-        "url": "http://example.com"
+        "name": "yalh76"
     },
     "requirements": {
         "yunohost": ">= 2.7.14"

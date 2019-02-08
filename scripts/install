@@ -178,7 +178,7 @@ chown -R "$app":"$app" "/var/log/$app"
 # CREATE DB FOLDER
 #=================================================
 
-mkdir -p "$final_path/db"
+mkdir -p "$final_path/distbin-db"
 
 #=================================================
 # MAKE SETUP

@@ -101,7 +101,7 @@ ynh_add_nginx_config
 # UPGRADE DEPENDENCIES
 #=================================================
 
-#ynh_install_app_dependencies deb1 deb2
+ynh_install_app_dependencies ca-certificates
 ynh_install_nodejs 8
 
 #=================================================

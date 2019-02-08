@@ -93,7 +93,7 @@ chown -R $app:$app /var/log/$app
 #=================================================
 
 # Define and install dependencies
-#ynh_install_app_dependencies
+ynh_install_app_dependencies ca-certificates
 ynh_install_nodejs 8
 
 #=================================================

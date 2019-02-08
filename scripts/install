@@ -16,6 +16,7 @@ source /usr/share/yunohost/helpers
 
 ynh_clean_setup () {
 	### Remove this function if there's nothing to clean before calling the remove script.
+	read -p "Press any key..."
 	ynh_clean_check_starting
 }
 # Exit if an error occurs during the execution of the script
@@ -186,10 +187,8 @@ mkdir -p "$final_path/db"
 chown -R "$app":"$app" "$final_path"
 pushd $final_path
     ynh_use_nodejs
-    sudo -u $app env PATH=$nodejs_path npm add hoek@^4.2.1 --save --production
-    sudo -u $app env PATH=$nodejs_path npm install ts-node
-    sudo -u $app env PATH=$nodejs_path npm install --production
-	sudo -u $app env PATH=$nodejs_path npm audit fix
+    sudo -u $app env PATH=$nodejs_path npm install --ignore-scripts
+    sudo -u $app env PATH=$nodejs_path npm run build
 popd
 
 #=================================================

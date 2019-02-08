@@ -7,8 +7,8 @@ Type=simple
 User=__APP__
 Group=__APP__
 EnvironmentFile=__FINALPATH__/.env
-WorkingDirectory=__FINALPATH__/
-ExecStart=/bin/sh -c 'npm start >> /var/log/__APP__/__APP__.log 2>&1'
+WorkingDirectory=__FINALPATH__
+ExecStart=/bin/sh -c 'node ./dist/bin/server >> /var/log/__APP__/__APP__.log 2>&1'
 
 [Install]
 WantedBy=multi-user.target

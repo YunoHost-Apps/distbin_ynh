@@ -90,8 +90,24 @@ fi
 #=================================================
 # SPECIFIC MODIFICATIONS
 #=================================================
-# ...
+# STOP SERVICE
 #=================================================
+
+ynh_systemd_action --action=stop --service_name=$app
+
+#=================================================
+# MODIFY A CONFIG FILE
+#=================================================
+
+# 9999 TODO : Change the config file or the systemd file
+#ynh_replace_string "EXTERNAL_URL=.*" "EXTERNAL_URL=https://$new_domain$new_path" "$final_path/.env"
+
+#=================================================
+# START SERVICE
+#=================================================
+
+ynh_systemd_action --action=start --service_name=$app
+
 
 #=================================================
 # GENERIC FINALISATION

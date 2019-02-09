@@ -191,7 +191,7 @@ pushd $final_path
 popd
 
 pushd $final_path/dist
-	sudo -u $app env PATH=$PATH npm install --ignore-scripts  --production
+	sudo -u $app env PATH=$PATH npm install --ignore-scripts
 popd
 
 #=================================================

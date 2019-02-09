@@ -101,7 +101,7 @@ ynh_add_nginx_config
 # UPGRADE DEPENDENCIES
 #=================================================
 
-#ynh_install_app_dependencies deb1 deb2
+ynh_install_app_dependencies ca-certificates
 ynh_install_nodejs 8
 
 #=================================================
@@ -124,7 +124,11 @@ ynh_system_user_create "$app" "$final_path"
 # CREATE DB FOLDER
 #=================================================
 
-mkdir -p "$final_path/db"
+DIRECTORY="$final_path/db"
+#Move old db
+if [ -d "$DIRECTORY" ]; then
+    mv "$final_path/db" "$final_path/distbin-db"
+fi
 
 #=================================================
 # MAKE INSTALL
@@ -133,9 +137,13 @@ mkdir -p "$final_path/db"
 chown -R "$app":"$app" "$final_path"
 pushd $final_path
     ynh_use_nodejs
-    sudo -u $app env PATH=$nodejs_path npm update --production
-    sudo -u $app env PATH=$nodejs_path npm install --production
-	sudo -u $app env PATH=$nodejs_path npm audit fix
+    sudo -u $app env PATH=$PATH npm install --ignore-scripts
+    sudo -u $app env PATH=$PATH npm run build
+	cp package* dist/ 
+popd
+
+pushd $final_path/dist
+    sudo -u $app env PATH=$PATH npm install --ignore-scripts  --production
 popd
 
 #=================================================

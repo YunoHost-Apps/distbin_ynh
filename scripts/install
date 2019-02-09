@@ -16,6 +16,7 @@ source /usr/share/yunohost/helpers
 
 ynh_clean_setup () {
 	### Remove this function if there's nothing to clean before calling the remove script.
+	read -p "Press any key..."
 	ynh_clean_check_starting
 }
 # Exit if an error occurs during the execution of the script
@@ -97,6 +98,7 @@ ynh_app_setting_set $app port $port
 ###		- As well as the section "REINSTALL DEPENDENCIES" in the restore script
 ###		- And the section "UPGRADE DEPENDENCIES" in the upgrade script
 
+ynh_install_app_dependencies ca-certificates
 ynh_install_nodejs 8
 
 #=================================================
@@ -176,7 +178,7 @@ chown -R "$app":"$app" "/var/log/$app"
 # CREATE DB FOLDER
 #=================================================
 
-mkdir -p "$final_path/db"
+mkdir -p "$final_path/distbin-db"
 
 #=================================================
 # MAKE SETUP
@@ -185,11 +187,15 @@ mkdir -p "$final_path/db"
 chown -R "$app":"$app" "$final_path"
 pushd $final_path
     ynh_use_nodejs
-    sudo -u $app env PATH=$PATH:$nodejs_path npm add hoek@^4.2.1 --save --production
-    sudo -u $app env PATH=$PATH:$nodejs_path npm install ts-node
-    sudo -u $app env PATH=$PATH:$nodejs_path npm install --production
-	sudo -u $app env PATH=$PATH:$nodejs_path npm audit fix
+    sudo -u $app env PATH=$PATH npm install --ignore-scripts
+    sudo -u $app env PATH=$PATH npm run build
+	cp package* dist/ 
 popd
+
+pushd $final_path/dist
+    sudo -u $app env PATH=$PATH npm install --ignore-scripts  --production
+popd
+
 
 #=================================================
 # SETUP SYSTEMD
@@ -207,8 +213,6 @@ popd
 ###		- And the section "SETUP SYSTEMD" in the upgrade script
 
 # Create a dedicated systemd config
-ynh_replace_string "__NODEJS_PATH__" "$nodejs_path" "../conf/systemd.service"
-ynh_replace_string "__PORT__" "$port" "../conf/systemd.service"
 ynh_add_systemd_config
 
 #=================================================
@@ -247,7 +251,12 @@ ynh_add_systemd_config
 ### `ynh_replace_string` is used to replace a string in a file.
 ### (It's compatible with sed regular expressions syntax)
 
-#ynh_replace_string "match_string" "replace_string" "$final_path/CONFIG_FILE"
+cp "../conf/.env" "$final_path/.env"
+
+ynh_replace_string "__NODEJS_PATH__" "$nodejs_path" "$final_path/.env"
+ynh_replace_string "__PORT__" "$port" "$final_path/.env"
+ynh_replace_string "__DOMAIN_URI__" "$domain$path_url" "$final_path/.env"
+ynh_replace_string "__FINALPATH__" "$final_path" "$final_path/.env"
 
 #=================================================
 # STORE THE CONFIG FILE CHECKSUM
@@ -258,7 +267,7 @@ ynh_add_systemd_config
 ### you can make a backup of this file before modifying it again if the admin had modified it.
 
 # Calculate and store the config file checksum into the app settings
-#ynh_store_file_checksum "$final_path/package.json"
+ynh_store_file_checksum "$final_path/.env"
 
 #=================================================
 # GENERIC FINALIZATION
@@ -271,7 +280,7 @@ ynh_add_systemd_config
 ### that really need such authorization.
 
 # Set permissions to app files
-#chown -R root: $final_path
+chown -R "$app":"$app" "$final_path"
 
 #=================================================
 # SETUP LOGROTATE

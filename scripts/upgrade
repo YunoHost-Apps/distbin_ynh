@@ -13,6 +13,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 # LOAD SETTINGS
 #=================================================
+ynh_print_info "Load settings"
 
 app=$YNH_APP_INSTANCE_NAME
 
@@ -28,6 +29,7 @@ port=$(ynh_app_setting_get $app port)
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
+ynh_print_info "Ensure downward compatibility"
 
 # Fix is_public as a boolean value
 if [ "$is_public" = "Yes" ]; then
@@ -53,6 +55,7 @@ fi
 #=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
 #=================================================
+ynh_print_info "Backup the app before upgrading"
 
 # Backup the current version of the app
 ynh_backup_before_upgrade
@@ -82,6 +85,7 @@ ynh_systemd_action --action=stop --service_name=$app
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
+ynh_print_info "Download, check and unpack source"
 
 # Download, check integrity, uncompress and patch the source from app.src#
 #ynh_setup_source "$final_path"
@@ -93,6 +97,7 @@ popd
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
+ynh_print_info "Reconfigure nginx"
 
 # Create a dedicated nginx config
 ynh_add_nginx_config
@@ -100,6 +105,7 @@ ynh_add_nginx_config
 #=================================================
 # UPGRADE DEPENDENCIES
 #=================================================
+ynh_print_info "Upgrade dependencies"
 
 ynh_install_app_dependencies ca-certificates
 ynh_install_nodejs 8
@@ -107,6 +113,7 @@ ynh_install_nodejs 8
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
+ynh_print_info "Create a dedicated user"
 
 # Create a dedicated user (if not existing)
 ynh_system_user_create "$app" "$final_path"
@@ -114,6 +121,7 @@ ynh_system_user_create "$app" "$final_path"
 #=================================================
 # PHP-FPM CONFIGURATION
 #=================================================
+ynh_print_info "Reconfigure php-fpm"
 
 # Create a dedicated php-fpm config
 #ynh_add_fpm_config
@@ -169,6 +177,7 @@ ynh_store_file_checksum "$final_path/.env"
 #=================================================
 # SETUP LOGROTATE
 #=================================================
+ynh_print_info "Reconfigure logrotate"
 
 # Use logrotate to manage app-specific logfile(s)
 ynh_use_logrotate --non-append
@@ -176,6 +185,7 @@ ynh_use_logrotate --non-append
 #=================================================
 # SETUP SYSTEMD
 #=================================================
+ynh_print_info "Reconfigure systemd"
 
 # Create a dedicated systemd config
 ynh_add_systemd_config
@@ -196,6 +206,7 @@ chown -R $app:$app /var/log/$app
 #=================================================
 # SETUP SSOWAT
 #=================================================
+ynh_print_info "Reconfigure SSOwat"
 
 # Make app public if necessary
 if [ $is_public -eq 1 ]
@@ -207,6 +218,7 @@ fi
 #=================================================
 # RELOAD NGINX
 #=================================================
+ynh_print_info "Reload nginx"
 
 systemctl reload nginx
 
@@ -215,3 +227,9 @@ systemctl reload nginx
 #=================================================
 
 ynh_systemd_action --action=start --service_name=$app --line_match="http://localhost:"
+
+#=================================================
+# END OF SCRIPT
+#=================================================
+
+ynh_print_info "Upgrade completed"

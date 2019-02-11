@@ -24,6 +24,7 @@ ynh_abort_if_errors
 #=================================================
 # LOAD SETTINGS
 #=================================================
+ynh_print_info "Load settings"
 
 app=$YNH_APP_INSTANCE_NAME
 
@@ -52,20 +53,14 @@ ynh_restore_file "/etc/nginx/conf.d/$domain.d/$app.conf"
 #=================================================
 # RESTORE THE APP MAIN DIR
 #=================================================
+ynh_print_info "Restore the app main directory"
 
 ynh_restore_file "$final_path"
 
 #=================================================
-# RESTORE THE MYSQL DATABASE
-#=================================================
-
-#db_pwd=$(ynh_app_setting_get $app mysqlpwd)
-#ynh_mysql_setup_db $db_name $db_name $db_pwd
-#ynh_mysql_connect_as $db_name $db_pwd $db_name < ./db.sql
-
-#=================================================
 # RECREATE THE DEDICATED USER
 #=================================================
+ynh_print_info "Recreate the dedicated user"
 
 # Create the dedicated user (if not existing)
 ynh_system_user_create "$app" "$final_path"
@@ -84,21 +79,32 @@ chown -R $app:$app /var/log/$app
 # RESTORE THE PHP-FPM CONFIGURATION
 #=================================================
 
-#ynh_restore_file "/etc/php5/fpm/pool.d/$app.conf"
+#ynh_restore_file "/etc/php/7.0/fpm/pool.d/$app.conf"
 
 #=================================================
 # SPECIFIC RESTORATION
 #=================================================
 # REINSTALL DEPENDENCIES
 #=================================================
+ynh_print_info "Reinstall dependencies"
 
 # Define and install dependencies
 ynh_install_app_dependencies ca-certificates
 ynh_install_nodejs 8
 
 #=================================================
+# RESTORE THE MYSQL DATABASE
+#=================================================
+ynh_print_info "Restore the mysql database"
+
+#db_pwd=$(ynh_app_setting_get $app mysqlpwd)
+#ynh_mysql_setup_db $db_name $db_name $db_pwd
+#ynh_mysql_connect_as $db_name $db_pwd $db_name < ./db.sql
+
+#=================================================
 # RESTORE SYSTEMD
 #=================================================
+ynh_print_info "Restore the systemd configuration"
 
 ynh_restore_file "/etc/systemd/system/$app.service"
 systemctl enable $app.service
@@ -127,8 +133,9 @@ ynh_restore_file "/etc/logrotate.d/$app"
 #=================================================
 # RELOAD NGINX AND PHP-FPM
 #=================================================
+ynh_print_info "Reload nginx and php-fpm"
 
-#systemctl reload php5-fpm
+#systemctl reload php7.0-fpm
 systemctl reload nginx
 
 #=================================================
@@ -143,3 +150,9 @@ chown -R "$app":"$app" "/var/log/$app"
 #=================================================
 
 ynh_systemd_action --action=start --service_name=$app --line_match="http://localhost:"
+
+#=================================================
+# END OF SCRIPT
+#=================================================
+
+ynh_print_info "Restoration completed"

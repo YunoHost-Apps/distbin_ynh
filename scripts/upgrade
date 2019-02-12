@@ -91,7 +91,7 @@ ynh_print_info "Download, check and unpack source"
 #ynh_setup_source "$final_path"
 
 pushd $final_path
-    git pull
+    git pull --quiet
 popd 
 
 #=================================================

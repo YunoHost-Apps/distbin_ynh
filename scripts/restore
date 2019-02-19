@@ -24,7 +24,7 @@ ynh_abort_if_errors
 #=================================================
 # LOAD SETTINGS
 #=================================================
-ynh_print_info "Load settings"
+ynh_print_info "Loading settings..."
 
 app=$YNH_APP_INSTANCE_NAME
 
@@ -36,6 +36,7 @@ final_path=$(ynh_app_setting_get $app final_path)
 #=================================================
 # CHECK IF THE APP CAN BE RESTORED
 #=================================================
+ynh_print_info "Validating restoration parameters..."
 
 ynh_webpath_available $domain $path_url \
 	|| ynh_die "Path not available: ${domain}${path_url}"
@@ -53,14 +54,14 @@ ynh_restore_file "/etc/nginx/conf.d/$domain.d/$app.conf"
 #=================================================
 # RESTORE THE APP MAIN DIR
 #=================================================
-ynh_print_info "Restore the app main directory"
+ynh_print_info "Restoring the app main directory..."
 
 ynh_restore_file "$final_path"
 
 #=================================================
 # RECREATE THE DEDICATED USER
 #=================================================
-ynh_print_info "Recreate the dedicated user"
+ynh_print_info "Recreating the dedicated system user..."
 
 # Create the dedicated user (if not existing)
 ynh_system_user_create "$app" "$final_path"
@@ -86,7 +87,7 @@ chown -R $app:$app /var/log/$app
 #=================================================
 # REINSTALL DEPENDENCIES
 #=================================================
-ynh_print_info "Reinstall dependencies"
+ynh_print_info "Reinstalling dependencies..."
 
 # Define and install dependencies
 ynh_install_app_dependencies ca-certificates
@@ -95,7 +96,7 @@ ynh_install_nodejs 8
 #=================================================
 # RESTORE THE MYSQL DATABASE
 #=================================================
-ynh_print_info "Restore the mysql database"
+ynh_print_info "Restoring the PostgreSQL database..."
 
 #db_pwd=$(ynh_app_setting_get $app mysqlpwd)
 #ynh_mysql_setup_db $db_name $db_name $db_pwd
@@ -104,7 +105,7 @@ ynh_print_info "Restore the mysql database"
 #=================================================
 # RESTORE SYSTEMD
 #=================================================
-ynh_print_info "Restore the systemd configuration"
+ynh_print_info "Restoring the systemd configuration..."
 
 ynh_restore_file "/etc/systemd/system/$app.service"
 systemctl enable $app.service
@@ -133,7 +134,7 @@ ynh_restore_file "/etc/logrotate.d/$app"
 #=================================================
 # RELOAD NGINX AND PHP-FPM
 #=================================================
-ynh_print_info "Reload nginx and php-fpm"
+ynh_print_info "Reloading nginx web server and php-fpm..."
 
 #systemctl reload php7.0-fpm
 systemctl reload nginx
@@ -155,4 +156,4 @@ ynh_systemd_action --action=start --service_name=$app --line_match="http://local
 # END OF SCRIPT
 #=================================================
 
-ynh_print_info "Restoration completed"
+ynh_print_info "Restoration completed for $app"

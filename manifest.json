@@ -6,14 +6,14 @@
         "en": "Distributed pastebin with ActivityPub.",
         "fr": "Pastebin distribué utilisant le protocole ActivityPub."
     },
-    "version": "1.0~ynh3",
+    "version": "1.0~ynh4",
     "url": "https://example.com",
     "license": "Apache-2.0",
     "maintainer": {
         "name": "yalh76"
     },
     "requirements": {
-        "yunohost": ">= 2.7.14"
+        "yunohost": ">= 3.4"
     },
     "multi_instance": true,
     "services": [

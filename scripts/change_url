@@ -24,6 +24,7 @@ app=$YNH_APP_INSTANCE_NAME
 #=================================================
 # LOAD SETTINGS
 #=================================================
+ynh_print_info "Loading installation settings..."
 
 # Needed for helper "ynh_add_nginx_config"
 final_path=$(ynh_app_setting_get $app final_path)
@@ -62,6 +63,7 @@ fi
 #=================================================
 # MODIFY URL IN NGINX CONF
 #=================================================
+ynh_print_info "Updating nginx web server configuration..."
 
 nginx_conf_path=/etc/nginx/conf.d/$old_domain.d/$app.conf
 
@@ -90,13 +92,42 @@ fi
 #=================================================
 # SPECIFIC MODIFICATIONS
 #=================================================
-# ...
+# STOP SERVICE
 #=================================================
+
+ynh_systemd_action --action=stop --service_name=$app
+
+#=================================================
+# MODIFY A CONFIG FILE
+#=================================================
+
+# Change the URL in the configuration file
+ynh_replace_string "EXTERNAL_URL=.*" "EXTERNAL_URL=https://$new_domain$new_path" "$final_path/.env"
+
+### Verify the checksum of a file, stored by `ynh_store_file_checksum` in the install script.
+### And create a backup of this file if the checksum is different. So the file will be backed up if the admin had modified it.
+ynh_backup_if_checksum_is_different "$final_path/.env"
+# Recalculate and store the checksum of the file for the next upgrade.
+ynh_store_file_checksum "$final_path/.env"
+
+#=================================================
+# START SERVICE
+#=================================================
+
+ynh_systemd_action --action=start --service_name=$app
+
 
 #=================================================
 # GENERIC FINALISATION
 #=================================================
 # RELOAD NGINX
 #=================================================
+ynh_print_info "Reloading nginx web server..."
 
 systemctl reload nginx
+
+#=================================================
+# END OF SCRIPT
+#=================================================
+
+ynh_print_info "Change of URL completed for $app"

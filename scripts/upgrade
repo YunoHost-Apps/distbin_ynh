@@ -40,12 +40,6 @@ elif [ "$is_public" = "No" ]; then
 	is_public=0
 fi
 
-# If db_name doesn't exist, create it
-#if [ -z $db_name ]; then
-#	db_name=$(ynh_sanitize_dbid $app)
-#	ynh_app_setting_set $app db_name $db_name
-#fi
-
 # If final_path doesn't exist, create it
 if [ -z $final_path ]; then
 	final_path=/var/www/$app
@@ -120,17 +114,9 @@ ynh_print_info "Making sure dedicated system user exists..."
 ynh_system_user_create "$app" "$final_path"
 
 #=================================================
-# PHP-FPM CONFIGURATION
-#=================================================
-ynh_print_info "Upgrading php-fpm configuration..."
-
-# Create a dedicated php-fpm config
-#ynh_add_fpm_config
-
-#=================================================
 # SPECIFIC UPGRADE
 #=================================================
-# CREATE DB FOLDER
+# CREATE STORAGE FOLDER
 #=================================================
 
 DIRECTORY="$final_path/db"

@@ -105,24 +105,6 @@ ynh_install_app_dependencies ca-certificates
 ynh_install_nodejs 8
 
 #=================================================
-# CREATE A MYSQL DATABASE
-#=================================================
-ynh_print_info "Creating a mysql database ..."
-
-### Use these lines if you need a database for the application.
-### `ynh_mysql_setup_db` will create a database, an associated user and a ramdom password.
-### The password will be stored as 'mysqlpwd' into the app settings,
-### and will be available as $db_pwd
-### If you're not using these lines:
-###		- Remove the section "BACKUP THE MYSQL DATABASE" in the backup script
-###		- Remove also the section "REMOVE THE MYSQL DATABASE" in the remove script
-###		- As well as the section "RESTORE THE MYSQL DATABASE" in the restore script
-
-#db_name=$(ynh_sanitize_dbid $app)
-#ynh_app_setting_set $app db_name $db_name
-#ynh_mysql_setup_db $db_name $db_name
-
-#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_print_info "Setting up source files ..."
@@ -153,25 +135,6 @@ ynh_print_info "Configuring system user ..."
 
 # Create a system user
 ynh_system_user_create "$app" "$final_path"
-
-#=================================================
-# PHP-FPM CONFIGURATION
-#=================================================
-ynh_print_info "Configuring php-fpm ..."
-
-### `ynh_add_fpm_config` is used to set up a PHP config.
-### You can remove it if your app doesn't use PHP.
-### `ynh_add_fpm_config` will use the files conf/php-fpm.conf and conf/php-fpm.ini
-### If you're not using these lines:
-###		- You can remove these files in conf/.
-###		- Remove the section "BACKUP THE PHP-FPM CONFIGURATION" in the backup script
-###		- Remove also the section "REMOVE PHP-FPM CONFIGURATION" in the remove script
-###		- As well as the section "RESTORE THE PHP-FPM CONFIGURATION" in the restore script
-###		With the reload at the end of the script.
-###		- And the section "PHP-FPM CONFIGURATION" in the upgrade script
-
-# Create a dedicated php-fpm config
-#ynh_add_fpm_config
 
 #=================================================
 # SPECIFIC SETUP
@@ -223,37 +186,6 @@ ynh_print_info "Configuring a systemd service ..."
 
 # Create a dedicated systemd config
 ynh_add_systemd_config
-
-#=================================================
-# SETUP APPLICATION WITH CURL
-#=================================================
-
-### Use these lines only if the app installation needs to be finalized through
-### web forms. We generally don't want to ask the final user,
-### so we're going to use curl to automatically fill the fields and submit the
-### forms.
-
-# Set right permissions for curl install
-#chown -R $app: $final_path
-
-# Set the app as temporarily public for curl call
-#ynh_print_info "Configuring ssowat ..."
-#ynh_app_setting_set $app skipped_uris "/"
-# Reload SSOwat config
-#yunohost app ssowatconf
-
-# Reload Nginx
-#systemctl reload nginx
-
-# Installation with curl
-#ynh_print_info "Finalizing install ..."
-#ynh_local_curl "/INSTALL_PATH" "key1=value1" "key2=value2" "key3=value3"
-
-# Remove the public access
-#if [ $is_public -eq 0 ]
-#then
-#	ynh_app_setting_delete $app skipped_uris
-#fi
 
 #=================================================
 # MODIFY A CONFIG FILE

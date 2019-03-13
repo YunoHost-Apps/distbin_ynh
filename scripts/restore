@@ -6,6 +6,7 @@
 # IMPORT GENERIC HELPERS
 #=================================================
 
+#Keep this path for calling _common.sh inside the execution's context of backup and restore scripts
 source ../settings/scripts/_common.sh
 source ../settings/scripts/ynh_systemd_action
 source /usr/share/yunohost/helpers
@@ -73,18 +74,22 @@ ynh_system_user_create "$app" "$final_path"
 # Restore permissions on app files
 chown -R "$app":"$app" "$final_path"
 
-mkdir -p /var/log/$app
-chown -R $app:$app /var/log/$app
-
 #=================================================
 # SPECIFIC RESTORATION
+#=================================================
+# CREATE LOG FOLDER
+#=================================================
+
+mkdir -p "/var/log/$app"
+chown -R "$app":"$app" "/var/log/$app"
+
 #=================================================
 # REINSTALL DEPENDENCIES
 #=================================================
 ynh_print_info "Reinstalling dependencies..."
 
 # Define and install dependencies
-ynh_install_app_dependencies ca-certificates
+ynh_install_app_dependencies $pkg_dependencies
 ynh_install_nodejs 8
 
 #=================================================

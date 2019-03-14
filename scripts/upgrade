@@ -40,12 +40,6 @@ elif [ "$is_public" = "No" ]; then
 	is_public=0
 fi
 
-# If db_name doesn't exist, create it
-#if [ -z $db_name ]; then
-#	db_name=$(ynh_sanitize_dbid $app)
-#	ynh_app_setting_set $app db_name $db_name
-#fi
-
 # If final_path doesn't exist, create it
 if [ -z $final_path ]; then
 	final_path=/var/www/$app
@@ -90,10 +84,9 @@ ynh_print_info "Upgrading source files..."
 # Download, check integrity, uncompress and patch the source from app.src#
 #ynh_setup_source "$final_path"
 
-pushd $final_path
-    git reset --hard
-    git pull --quiet
-popd 
+git clone --quiet https://github.com/gobengo/distbin "$final_path/upgrade"
+cp -a "$final_path/upgrade/." "$final_path/."
+rm -r "$final_path/upgrade"
 
 #=================================================
 # NGINX CONFIGURATION
@@ -108,7 +101,7 @@ ynh_add_nginx_config
 #=================================================
 ynh_print_info "Upgrading dependencies..."
 
-ynh_install_app_dependencies ca-certificates
+ynh_install_app_dependencies $pkg_dependencies
 ynh_install_nodejs 8
 
 #=================================================
@@ -120,17 +113,9 @@ ynh_print_info "Making sure dedicated system user exists..."
 ynh_system_user_create "$app" "$final_path"
 
 #=================================================
-# PHP-FPM CONFIGURATION
-#=================================================
-ynh_print_info "Upgrading php-fpm configuration..."
-
-# Create a dedicated php-fpm config
-#ynh_add_fpm_config
-
-#=================================================
 # SPECIFIC UPGRADE
 #=================================================
-# CREATE DB FOLDER
+# CREATE STORAGE FOLDER
 #=================================================
 
 DIRECTORY="$final_path/db"
@@ -201,8 +186,12 @@ ynh_add_systemd_config
 #chown -R root: $final_path
 chown -R $app:$app $final_path
 
-mkdir -p /var/log/$app
-chown -R $app:$app /var/log/$app
+#=================================================
+# CREATE LOG FOLDER
+#=================================================
+
+mkdir -p "/var/log/$app"
+chown -R "$app":"$app" "/var/log/$app"
 
 #=================================================
 # SETUP SSOWAT

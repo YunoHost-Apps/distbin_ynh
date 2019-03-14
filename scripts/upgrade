@@ -85,7 +85,7 @@ ynh_print_info "Upgrading source files..."
 #ynh_setup_source "$final_path"
 
 git clone --quiet https://github.com/gobengo/distbin "$final_path/upgrade"
-cp -a "$final_path/upgrade/." "$final_path/$app/."
+cp -a "$final_path/upgrade/." "$final_path/."
 rm -r "$final_path/upgrade"
 
 #=================================================

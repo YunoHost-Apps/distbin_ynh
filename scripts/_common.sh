@@ -5,7 +5,7 @@
 #=================================================
 
 # dependencies used by the app
-pkg_dependencies="ca-certificates"
+pkg_dependencies="ca-certificates curl sudo"
 
 #=================================================
 # PERSONAL HELPERS

@@ -1,5 +1,5 @@
-SOURCE_URL=url of app's source
-SOURCE_SUM=sha256 checksum
+SOURCE_URL=https://github.com/gobengo/distbin/archive/v1.2.0.tar.gz
+SOURCE_SUM=ae72d386e9c68afa4d6b08f0a9c9b441a04176001beb226b903f924076e5cfcb
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true

@@ -32,6 +32,7 @@ final_path=$(ynh_app_setting_get $app final_path)
 # Add settings here as needed by your application
 #db_name=$(ynh_app_setting_get "$app" db_name)
 #db_pwd=$(ynh_app_setting_get $app db_pwd)
+port=$(ynh_app_setting_get $app port)
 
 #=================================================
 # CHECK THE SYNTAX OF THE PATHS

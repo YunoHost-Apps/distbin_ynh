@@ -196,10 +196,16 @@ ynh_add_systemd_config
 ### (It's compatible with sed regular expressions syntax)
 
 cp "../conf/.env" "$final_path/.env"
+if [ "$path_url" = "/" ]
+then
+    domain_uri="$domain"
+else
+    domain_uri="$domain$path_url"
+fi
 
 ynh_replace_string "__NODEJS_PATH__" "$nodejs_path" "$final_path/.env"
 ynh_replace_string "__PORT__" "$port" "$final_path/.env"
-ynh_replace_string "__DOMAIN_URI__" "$domain$path_url" "$final_path/.env"
+ynh_replace_string "__DOMAIN_URI__" "$domain_uri" "$final_path/.env"
 ynh_replace_string "__FINALPATH__" "$final_path" "$final_path/.env"
 
 #=================================================

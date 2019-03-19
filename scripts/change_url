@@ -103,7 +103,15 @@ ynh_systemd_action --action=stop --service_name=$app
 #=================================================
 
 # Change the URL in the configuration file
-ynh_replace_string "EXTERNAL_URL=.*" "EXTERNAL_URL=https://$new_domain$new_path" "$final_path/.env"
+
+if [ "$new_path" = "/" ]
+then
+    new_domain_uri="$domain$path_url"
+else
+    new_domain_uri="$domain"
+fi
+
+ynh_replace_string "EXTERNAL_URL=.*" "EXTERNAL_URL=https://$new_domain_uri/" "$final_path/.env"
 
 ### Verify the checksum of a file, stored by `ynh_store_file_checksum` in the install script.
 ### And create a backup of this file if the checksum is different. So the file will be backed up if the admin had modified it.
@@ -116,7 +124,6 @@ ynh_store_file_checksum "$final_path/.env"
 #=================================================
 
 ynh_systemd_action --action=start --service_name=$app
-
 
 #=================================================
 # GENERIC FINALISATION

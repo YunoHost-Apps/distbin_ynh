@@ -104,7 +104,7 @@ ynh_systemd_action --action=stop --service_name=$app
 
 # Change the URL in the configuration file
 
-if [ "$new_path" = "/" ]
+if [ "$new_path" == "/" ]
 then
     new_domain_uri="$new_domain$new_path"
 else

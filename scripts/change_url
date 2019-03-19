@@ -106,9 +106,9 @@ ynh_systemd_action --action=stop --service_name=$app
 
 if [ "$new_path" == "/" ]
 then
-    new_domain_uri="$new_domain$new_path"
-else
     new_domain_uri="$new_domain"
+else
+    new_domain_uri="$new_domain$new_path"
 fi
 
 ynh_replace_string "EXTERNAL_URL=.*" "EXTERNAL_URL=https://$new_domain_uri/" "$final_path/.env"

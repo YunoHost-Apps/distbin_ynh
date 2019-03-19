@@ -7,6 +7,7 @@
 #=================================================
 
 source _common.sh
+source ynh_systemd_action
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -96,7 +97,7 @@ fi
 # STOP SERVICE
 #=================================================
 
-ynh_systemd_action --action=stop --service_name=$app
+ynh_systemd_action --action=stop --service_name=$app --log_path=systemd --line_match="Stopped Distbin Service"
 
 #=================================================
 # MODIFY A CONFIG FILE
@@ -123,7 +124,7 @@ ynh_store_file_checksum "$final_path/.env"
 # START SERVICE
 #=================================================
 
-ynh_systemd_action --action=start --service_name=$app
+ynh_systemd_action --action=start --service_name=$app --line_match="http"
 
 #=================================================
 # GENERIC FINALISATION

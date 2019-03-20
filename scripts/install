@@ -26,7 +26,7 @@ ynh_abort_if_errors
 #=================================================
 
 domain=$YNH_APP_ARG_DOMAIN
-path_url="/"
+path_url=$YNH_APP_ARG_PATH
 #admin=$YNH_APP_ARG_ADMIN
 is_public=$YNH_APP_ARG_IS_PUBLIC
 #language=$YNH_APP_ARG_LANGUAGE
@@ -196,10 +196,16 @@ ynh_add_systemd_config
 ### (It's compatible with sed regular expressions syntax)
 
 cp "../conf/.env" "$final_path/.env"
+if [ "$path_url" == "/" ]
+then
+    domain_uri="$domain"
+else
+    domain_uri="$domain$path_url"
+fi
 
 ynh_replace_string "__NODEJS_PATH__" "$nodejs_path" "$final_path/.env"
 ynh_replace_string "__PORT__" "$port" "$final_path/.env"
-ynh_replace_string "__DOMAIN_URI__" "$domain$path_url" "$final_path/.env"
+ynh_replace_string "__DOMAIN_URI__" "$domain_uri" "$final_path/.env"
 ynh_replace_string "__FINALPATH__" "$final_path" "$final_path/.env"
 
 #=================================================
@@ -281,7 +287,7 @@ systemctl reload nginx
 # START SERVICE
 #=================================================
 
-ynh_systemd_action --action=start --service_name=$app  --log_path=systemd --line_match="Started Distbin Service"
+ynh_systemd_action --action=start --service_name=$app --line_match="http"
 
 #=================================================
 # END OF SCRIPT

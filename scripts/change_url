@@ -7,6 +7,7 @@
 #=================================================
 
 source _common.sh
+source ynh_systemd_action
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -17,7 +18,7 @@ old_domain=$YNH_APP_OLD_DOMAIN
 old_path=$YNH_APP_OLD_PATH
 
 new_domain=$YNH_APP_NEW_DOMAIN
-new_path="/"
+new_path=$YNH_APP_NEW_PATH
 
 app=$YNH_APP_INSTANCE_NAME
 
@@ -32,6 +33,7 @@ final_path=$(ynh_app_setting_get $app final_path)
 # Add settings here as needed by your application
 #db_name=$(ynh_app_setting_get "$app" db_name)
 #db_pwd=$(ynh_app_setting_get $app db_pwd)
+port=$(ynh_app_setting_get $app port)
 
 #=================================================
 # CHECK THE SYNTAX OF THE PATHS
@@ -95,14 +97,22 @@ fi
 # STOP SERVICE
 #=================================================
 
-ynh_systemd_action --action=stop --service_name=$app
+ynh_systemd_action --action=stop --service_name=$app --log_path=systemd --line_match="Stopped Distbin Service"
 
 #=================================================
 # MODIFY A CONFIG FILE
 #=================================================
 
 # Change the URL in the configuration file
-ynh_replace_string "EXTERNAL_URL=.*" "EXTERNAL_URL=https://$new_domain$new_path" "$final_path/.env"
+
+if [ "$new_path" == "/" ]
+then
+    new_domain_uri="$new_domain"
+else
+    new_domain_uri="$new_domain$new_path"
+fi
+
+ynh_replace_string "EXTERNAL_URL=.*" "EXTERNAL_URL=https://$new_domain_uri/" "$final_path/.env"
 
 ### Verify the checksum of a file, stored by `ynh_store_file_checksum` in the install script.
 ### And create a backup of this file if the checksum is different. So the file will be backed up if the admin had modified it.
@@ -114,8 +124,7 @@ ynh_store_file_checksum "$final_path/.env"
 # START SERVICE
 #=================================================
 
-ynh_systemd_action --action=start --service_name=$app
-
+ynh_systemd_action --action=start --service_name=$app --line_match="http"
 
 #=================================================
 # GENERIC FINALISATION

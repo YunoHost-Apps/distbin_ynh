@@ -90,7 +90,7 @@ ynh_print_info "Reinstalling dependencies..."
 
 # Define and install dependencies
 ynh_install_app_dependencies $pkg_dependencies
-ynh_install_nodejs 8
+ynh_install_nodejs 10
 
 #=================================================
 # RESTORE SYSTEMD

@@ -11,7 +11,7 @@ A distributed pastebin. i.e. it is a service where anyone can post things on the
 
 A networked place to store posted web documents. This is meant to allow for distributed social commentary and reaction around these documents using best practices recommended or noted by the W3C Social Web Working Group.
 
-**Shipped version:** 1.0
+**Shipped version:** 1.2.0
 
 ## Screenshots
 

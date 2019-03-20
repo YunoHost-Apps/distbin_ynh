@@ -82,11 +82,7 @@ ynh_systemd_action --action=stop --service_name=$app
 ynh_print_info "Upgrading source files..."
 
 # Download, check integrity, uncompress and patch the source from app.src#
-#ynh_setup_source "$final_path"
-
-git clone --quiet https://github.com/gobengo/distbin "$final_path/upgrade"
-cp -a "$final_path/upgrade/." "$final_path/."
-rm -r "$final_path/upgrade"
+ynh_setup_source "$final_path"
 
 #=================================================
 # NGINX CONFIGURATION
@@ -102,7 +98,8 @@ ynh_add_nginx_config
 ynh_print_info "Upgrading dependencies..."
 
 ynh_install_app_dependencies $pkg_dependencies
-ynh_install_nodejs 8
+ynh_remove_nodejs
+ynh_install_nodejs 10
 
 #=================================================
 # CREATE DEDICATED USER

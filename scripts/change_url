@@ -124,7 +124,8 @@ ynh_store_file_checksum "$final_path/.env"
 # START SERVICE
 #=================================================
 
-ynh_systemd_action --action=start --service_name=$app --line_match="http"
+ynh_systemd_action --action=start --service_name=$app --log_path=systemd --line_match="Started Distbin Service"
+sleep 10
 
 #=================================================
 # GENERIC FINALISATION

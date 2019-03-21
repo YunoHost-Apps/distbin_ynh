@@ -196,6 +196,7 @@ ynh_add_systemd_config
 ### (It's compatible with sed regular expressions syntax)
 
 cp "../conf/.env" "$final_path/.env"
+
 if [ "$path_url" == "/" ]
 then
     domain_uri="$domain"

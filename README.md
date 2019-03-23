@@ -15,9 +15,7 @@ A networked place to store posted web documents. This is meant to allow for dist
 
 ## Screenshots
 
-![distbin-screenshot1](https://user-images.githubusercontent.com/30271971/52230917-e4d88780-28b8-11e9-9eb1-64c08d26576a.png)
-
-![distbin-screenshot2](https://user-images.githubusercontent.com/30271971/52230927-e99d3b80-28b8-11e9-9e5d-439bf0feca8d.png)
+![distbin-screenshot](https://user-images.githubusercontent.com/30271971/54859831-38405100-4d12-11e9-9273-e44596e04e5c.PNG)
 
 ## Demo
 

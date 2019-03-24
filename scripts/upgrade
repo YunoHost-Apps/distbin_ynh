@@ -19,11 +19,8 @@ app=$YNH_APP_INSTANCE_NAME
 
 domain=$(ynh_app_setting_get $app domain)
 path_url=$(ynh_app_setting_get $app path)
-#admin=$(ynh_app_setting_get $app admin)
 is_public=$(ynh_app_setting_get $app is_public)
 final_path=$(ynh_app_setting_get $app final_path)
-#language=$(ynh_app_setting_get $app language)
-#db_name=$(ynh_app_setting_get $app db_name)
 port=$(ynh_app_setting_get $app port)
 
 #=================================================
@@ -141,9 +138,6 @@ popd
 # MODIFY A CONFIG FILE
 #=================================================
 
-### `ynh_replace_string` is used to replace a string in a file.
-### (It's compatible with sed regular expressions syntax)
-
 cp "../conf/.env" "$final_path/.env"
 
 if [ "$path_url" == "/" ]
@@ -158,8 +152,6 @@ ynh_replace_string "__PORT__" "$port" "$final_path/.env"
 ynh_replace_string "__DOMAIN_URI__" "$domain_uri" "$final_path/.env"
 ynh_replace_string "__FINALPATH__" "$final_path" "$final_path/.env"
 
-### Verify the checksum of a file, stored by `ynh_store_file_checksum` in the install script.
-### And create a backup of this file if the checksum is different. So the file will be backed up if the admin had modified it.
 ynh_backup_if_checksum_is_different "$final_path/.env"
 # Recalculate and store the checksum of the file for the next upgrade.
 ynh_store_file_checksum "$final_path/.env"
@@ -187,7 +179,6 @@ ynh_add_systemd_config
 #=================================================
 
 # Set permissions on app files
-#chown -R root: $final_path
 chown -R $app:$app $final_path
 
 #=================================================

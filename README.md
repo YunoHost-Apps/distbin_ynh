@@ -29,7 +29,8 @@ No configuration parameter available for now.
 
 #### Multi-users support
 
-LDAP and HTTP are not supported
+LDAP and HTTP are not supported.
+
 The app can be used by multiple users, anonymously.
 
 #### Supported architectures

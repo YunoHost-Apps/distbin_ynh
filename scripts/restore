@@ -24,23 +24,23 @@ ynh_abort_if_errors
 #=================================================
 # LOAD SETTINGS
 #=================================================
-ynh_print_info "Loading settings..."
+ynh_print_info --message="Loading settings..."
 
 app=$YNH_APP_INSTANCE_NAME
 
-domain=$(ynh_app_setting_get $app domain)
-path_url=$(ynh_app_setting_get $app path)
-final_path=$(ynh_app_setting_get $app final_path)
+domain=$(ynh_app_setting_get --app=$app --key=domain)
+path_url=$(ynh_app_setting_get --app=$app --key=path)
+final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 
 #=================================================
 # CHECK IF THE APP CAN BE RESTORED
 #=================================================
-ynh_print_info "Validating restoration parameters..."
+ynh_print_info --message="Validating restoration parameters..."
 
-ynh_webpath_available $domain $path_url \
-	|| ynh_die "Path not available: ${domain}${path_url}"
+ynh_webpath_available --domain=$domain --path_url=$path_url \
+	|| ynh_die --message="Path not available: ${domain}${path_url}"
 test ! -d $final_path \
-	|| ynh_die "There is already a directory: $final_path "
+	|| ynh_die --message="There is already a directory: $final_path "
 
 #=================================================
 # STANDARD RESTORATION STEPS
@@ -48,22 +48,22 @@ test ! -d $final_path \
 # RESTORE THE NGINX CONFIGURATION
 #=================================================
 
-ynh_restore_file "/etc/nginx/conf.d/$domain.d/$app.conf"
+ynh_restore_file --origin_path="/etc/nginx/conf.d/$domain.d/$app.conf"
 
 #=================================================
 # RESTORE THE APP MAIN DIR
 #=================================================
-ynh_print_info "Restoring the app main directory..."
+ynh_print_info --message="Restoring the app main directory..."
 
-ynh_restore_file "$final_path"
+ynh_restore_file --origin_path="$final_path"
 
 #=================================================
 # RECREATE THE DEDICATED USER
 #=================================================
-ynh_print_info "Recreating the dedicated system user..."
+ynh_print_info --message="Recreating the dedicated system user..."
 
 # Create the dedicated user (if not existing)
-ynh_system_user_create "$app" "$final_path"
+ynh_system_user_create --username=$app --home_dir=$final_path
 
 #=================================================
 # RESTORE USER RIGHTS
@@ -84,7 +84,7 @@ chown -R "$app":"$app" "/var/log/$app"
 #=================================================
 # REINSTALL DEPENDENCIES
 #=================================================
-ynh_print_info "Reinstalling dependencies..."
+ynh_print_info --message="Reinstalling dependencies..."
 
 # Define and install dependencies
 ynh_install_app_dependencies $pkg_dependencies
@@ -93,9 +93,9 @@ ynh_install_nodejs 10
 #=================================================
 # RESTORE SYSTEMD
 #=================================================
-ynh_print_info "Restoring the systemd configuration..."
+ynh_print_info --message="Restoring the systemd configuration..."
 
-ynh_restore_file "/etc/systemd/system/$app.service"
+ynh_restore_file --origin_path="/etc/systemd/system/$app.service"
 systemctl enable $app.service
 systemctl daemon-reload
 
@@ -106,23 +106,17 @@ systemctl daemon-reload
 yunohost service add $app --log "/var/log/$app/$app.log"
 
 #=================================================
-# RESTORE THE CRON FILE
-#=================================================
-
-#ynh_restore_file "/etc/cron.d/$app"
-
-#=================================================
 # RESTORE THE LOGROTATE CONFIGURATION
 #=================================================
 
-ynh_restore_file "/etc/logrotate.d/$app"
+ynh_restore_file --origin_path="/etc/logrotate.d/$app"
 
 #=================================================
 # GENERIC FINALIZATION
 #=================================================
 # RELOAD NGINX AND PHP-FPM
 #=================================================
-ynh_print_info "Reloading nginx web server..."
+ynh_print_info --message="Reloading nginx web server..."
 
 systemctl reload nginx
 
@@ -144,4 +138,4 @@ sleep 10
 # END OF SCRIPT
 #=================================================
 
-ynh_print_info "Restoration completed for $app"
+ynh_print_info --message="Restoration completed for $app"

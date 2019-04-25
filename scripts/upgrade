@@ -7,46 +7,45 @@
 #=================================================
 
 source _common.sh
-source ynh_systemd_action
 source /usr/share/yunohost/helpers
 
 #=================================================
 # LOAD SETTINGS
 #=================================================
-ynh_print_info "Loading installation settings..."
+ynh_print_info --message="Loading installation settings..."
 
 app=$YNH_APP_INSTANCE_NAME
 
-domain=$(ynh_app_setting_get $app domain)
-path_url=$(ynh_app_setting_get $app path)
-is_public=$(ynh_app_setting_get $app is_public)
-final_path=$(ynh_app_setting_get $app final_path)
-port=$(ynh_app_setting_get $app port)
+domain=$(ynh_app_setting_get --app=$app --key=domain)
+path_url=$(ynh_app_setting_get --app=$app --key=path)
+is_public=$(ynh_app_setting_get --app=$app --key=is_public)
+final_path=$(ynh_app_setting_get --app=$app --key=final_path)
+port=$(ynh_app_setting_get --app=$app --key=port)
 
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
-ynh_print_info "Ensuring downward compatibility..."
+ynh_print_info --message="Ensuring downward compatibility..."
 
 # Fix is_public as a boolean value
 if [ "$is_public" = "Yes" ]; then
-	ynh_app_setting_set $app is_public 1
+	ynh_app_setting_set --app=$app --key=is_public --value=1
 	is_public=1
 elif [ "$is_public" = "No" ]; then
-	ynh_app_setting_set $app is_public 0
+	ynh_app_setting_set --app=$app --key=is_public --value=0
 	is_public=0
 fi
 
 # If final_path doesn't exist, create it
 if [ -z $final_path ]; then
 	final_path=/var/www/$app
-	ynh_app_setting_set $app final_path $final_path
+	ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 fi
 
 #=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
 #=================================================
-ynh_print_info "Backing up the app before upgrading (may take a while)..."
+ynh_print_info --message="Backing up the app before upgrading (may take a while)..."
 
 # Backup the current version of the app
 ynh_backup_before_upgrade
@@ -59,13 +58,6 @@ ynh_clean_setup () {
 ynh_abort_if_errors
 
 #=================================================
-# CHECK THE PATH
-#=================================================
-
-# Normalize the URL path syntax
-path_url=$(ynh_normalize_url_path $path_url)
-
-#=================================================
 # STOP SERVICE
 #=================================================
 
@@ -76,15 +68,15 @@ ynh_systemd_action --action=stop --service_name=$app
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_print_info "Upgrading source files..."
+ynh_print_info --message="Upgrading source files..."
 
 # Download, check integrity, uncompress and patch the source from app.src#
-ynh_setup_source "$final_path"
+ynh_setup_source --dest_dir="$final_path"
 
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_print_info "Upgrading nginx web server configuration..."
+ynh_print_info --message="Upgrading nginx web server configuration..."
 
 # Create a dedicated nginx config
 ynh_add_nginx_config
@@ -92,7 +84,7 @@ ynh_add_nginx_config
 #=================================================
 # UPGRADE DEPENDENCIES
 #=================================================
-ynh_print_info "Upgrading dependencies..."
+ynh_print_info --message="Upgrading dependencies..."
 
 ynh_install_app_dependencies $pkg_dependencies
 ynh_remove_nodejs
@@ -101,10 +93,10 @@ ynh_install_nodejs 10
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
-ynh_print_info "Making sure dedicated system user exists..."
+ynh_print_info --message="Making sure dedicated system user exists..."
 
 # Create a dedicated user (if not existing)
-ynh_system_user_create "$app" "$final_path"
+ynh_system_user_create --username=$app --home_dir=$final_path
 
 #=================================================
 # SPECIFIC UPGRADE
@@ -147,19 +139,19 @@ else
     domain_uri="$domain$path_url"
 fi
 
-ynh_replace_string "__NODEJS_PATH__" "$nodejs_path" "$final_path/.env"
-ynh_replace_string "__PORT__" "$port" "$final_path/.env"
-ynh_replace_string "__DOMAIN_URI__" "$domain_uri" "$final_path/.env"
-ynh_replace_string "__FINALPATH__" "$final_path" "$final_path/.env"
+ynh_replace_string --match_string="__NODEJS_PATH__" --replace_string="$nodejs_path" --target_file="$final_path/.env"
+ynh_replace_string --match_string="__PORT__" --replace_string="$port" --target_file="$final_path/.env"
+ynh_replace_string --match_string="__DOMAIN_URI__" --replace_string="$domain_uri" --target_file="$final_path/.env"
+ynh_replace_string --match_string="__FINALPATH__" --replace_string="$final_path" --target_file="$final_path/.env"
 
-ynh_backup_if_checksum_is_different "$final_path/.env"
+ynh_backup_if_checksum_is_different --file="$final_path/.env"
 # Recalculate and store the checksum of the file for the next upgrade.
-ynh_store_file_checksum "$final_path/.env"
+ynh_store_file_checksum --file="$final_path/.env"
 
 #=================================================
 # SETUP LOGROTATE
 #=================================================
-ynh_print_info "Upgrading logrotate configuration..."
+ynh_print_info --message="Upgrading logrotate configuration..."
 
 # Use logrotate to manage app-specific logfile(s)
 ynh_use_logrotate --non-append
@@ -167,7 +159,7 @@ ynh_use_logrotate --non-append
 #=================================================
 # SETUP SYSTEMD
 #=================================================
-ynh_print_info "Upgrading systemd configuration..."
+ynh_print_info --message="Upgrading systemd configuration..."
 
 # Create a dedicated systemd config
 ynh_add_systemd_config
@@ -191,19 +183,19 @@ chown -R "$app":"$app" "/var/log/$app"
 #=================================================
 # SETUP SSOWAT
 #=================================================
-ynh_print_info "Upgrading SSOwat configuration..."
+ynh_print_info --message="Upgrading SSOwat configuration..."
 
 # Make app public if necessary
 if [ $is_public -eq 1 ]
 then
 	# unprotected_uris allows SSO credentials to be passed anyway
-	ynh_app_setting_set $app unprotected_uris "/"
+	ynh_app_setting_set --app=$app --key=unprotected_uris --value="/"
 fi
 
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_print_info "Reloading nginx web server..."
+ynh_print_info --message="Reloading nginx web server..."
 
 systemctl reload nginx
 
@@ -218,4 +210,4 @@ sleep 10
 # END OF SCRIPT
 #=================================================
 
-ynh_print_info "Upgrade of $app completed"
+ynh_print_info --message="Upgrade of $app completed"

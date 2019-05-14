@@ -29,14 +29,14 @@ final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 # Remove a service from the admin panel, added by `yunohost service add`
 if yunohost service status $app >/dev/null 2>&1
 then
-	ynh_print_info --message="Removing $app service"
+	ynh_print_info --message="Removing $app service..."
 	yunohost service remove $app
 fi
 
 #=================================================
 # STOP AND REMOVE SERVICE
 #=================================================
-ynh_print_info --message="Stopping and removing the systemd service"
+ynh_print_info --message="Stopping and removing the systemd service..."
 
 # Remove the dedicated systemd config
 ynh_remove_systemd_config
@@ -44,7 +44,7 @@ ynh_remove_systemd_config
 #=================================================
 # REMOVE DEPENDENCIES
 #=================================================
-ynh_print_info --message="Removing dependencies"
+ynh_print_info --message="Removing dependencies..."
 
 # Remove metapackage and its dependencies
 ynh_remove_app_dependencies
@@ -53,7 +53,7 @@ ynh_remove_nodejs
 #=================================================
 # REMOVE APP MAIN DIR
 #=================================================
-ynh_print_info --message="Removing app main directory"
+ynh_print_info --message="Removing app main directory..."
 
 # Remove the app directory securely
 ynh_secure_remove --file="$final_path"
@@ -61,7 +61,7 @@ ynh_secure_remove --file="$final_path"
 #=================================================
 # REMOVE NGINX CONFIGURATION
 #=================================================
-ynh_print_info --message="Removing nginx web server configuration"
+ynh_print_info --message="Removing nginx web server configuration..."
 
 # Remove the dedicated nginx config
 ynh_remove_nginx_config
@@ -69,7 +69,7 @@ ynh_remove_nginx_config
 #=================================================
 # REMOVE LOGROTATE CONFIGURATION
 #=================================================
-ynh_print_info --message="Removing logrotate configuration"
+ynh_print_info --message="Removing logrotate configuration..."
 
 # Remove the app-specific logrotate config
 ynh_remove_logrotate
@@ -77,11 +77,10 @@ ynh_remove_logrotate
 #=================================================
 # CLOSE A PORT
 #=================================================
-ynh_print_info --message="Closing a port..."
 
 if yunohost firewall list | grep -q "\- $port$"
 then
-	ynh_print_info --message="Closing port $port"
+	ynh_print_info --message="Closing port $port..."
 	ynh_exec_warn_less yunohost firewall disallow TCP $port
 fi
 
@@ -99,7 +98,7 @@ ynh_secure_remove --file="/var/log/$app/"
 #=================================================
 # REMOVE DEDICATED USER
 #=================================================
-ynh_print_info --message="Removing the dedicated system user"
+ynh_print_info --message="Removing the dedicated system user..."
 
 # Delete a system user
 ynh_system_user_delete --username=$app

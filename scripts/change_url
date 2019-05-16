@@ -30,6 +30,9 @@ ynh_print_info --message="Loading installation settings..."
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 
 # Add settings here as needed by your application
+#db_name=$(ynh_app_setting_get --app=$app --key=db_name)
+#db_user=$db_name
+#db_pwd=$(ynh_app_setting_get --app=$app --key=db_pwd)
 port=$(ynh_app_setting_get --app=$app --key=port)
 
 #=================================================
@@ -50,6 +53,13 @@ fi
 
 #=================================================
 # STANDARD MODIFICATIONS
+#=================================================
+# STOP SYSTEMD SERVICE
+#=================================================
+ynh_print_info --message="Stopping a systemd service..."
+
+ynh_systemd_action --service_name=$app --action=stop --log_path=systemd --line_match="Stopped Distbin Service"
+
 #=================================================
 # MODIFY URL IN NGINX CONF
 #=================================================
@@ -82,14 +92,9 @@ fi
 #=================================================
 # SPECIFIC MODIFICATIONS
 #=================================================
-# STOP SERVICE
-#=================================================
-
-ynh_systemd_action --action=stop --service_name=$app --log_path=systemd --line_match="Stopped Distbin Service"
-
-#=================================================
 # MODIFY A CONFIG FILE
 #=================================================
+ynh_print_info --message="Modifying config file..."
 
 # Change the URL in the configuration file
 
@@ -102,19 +107,25 @@ fi
 
 ynh_replace_string --match_string="EXTERNAL_URL=.*" --replace_string="EXTERNAL_URL=https://$new_domain_uri/" --target_file="$final_path/.env"
 
+#=================================================
+# STORE THE CONFIG FILE CHECKSUM
+#=================================================
+ynh_print_info --message="Storing the config file checksum..."
+
 ynh_backup_if_checksum_is_different --file="$final_path/.env"
 # Recalculate and store the checksum of the file for the next upgrade.
 ynh_store_file_checksum --file="$final_path/.env"
 
 #=================================================
-# START SERVICE
+# GENERIC FINALISATION
 #=================================================
+# START SYSTEMD SERVICE
+#=================================================
+ynh_print_info --message="Starting a systemd service..."
 
 ynh_systemd_action --action=start --service_name=$app --log_path=systemd --line_match="Started Distbin Service"
 sleep 10
 
-#=================================================
-# GENERIC FINALISATION
 #=================================================
 # RELOAD NGINX
 #=================================================

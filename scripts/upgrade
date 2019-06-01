@@ -153,6 +153,7 @@ popd
 #=================================================
 ynh_print_info --message="Modifying config file..."
 
+ynh_backup_if_checksum_is_different --file="$final_path/.env"
 cp "../conf/.env" "$final_path/.env"
 
 if [ "$path_url" == "/" ]
@@ -172,7 +173,6 @@ ynh_replace_string --match_string="__FINALPATH__" --replace_string="$final_path"
 #=================================================
 ynh_print_info --message="Storing the config file checksum..."
 
-ynh_backup_if_checksum_is_different --file="$final_path/.env"
 # Recalculate and store the checksum of the file for the next upgrade.
 ynh_store_file_checksum --file="$final_path/.env"
 

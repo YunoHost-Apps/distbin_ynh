@@ -33,6 +33,13 @@ domain=$(ynh_app_setting_get --app=$app --key=domain)
 #=================================================
 # STANDARD BACKUP STEPS
 #=================================================
+# STOP SYSTEMD SERVICE
+#=================================================
+ynh_print_info --message="Stopping a systemd service..."
+
+ynh_systemd_action --service_name=$app --action="stop" --log_path=systemd --line_match="Stopped Distbin Service"
+
+#=================================================
 # BACKUP THE APP MAIN DIR
 #=================================================
 ynh_print_info --message="Backing up the main app directory..."
@@ -61,6 +68,13 @@ ynh_backup --src_path="/etc/logrotate.d/$app"
 ynh_print_info --message="Backing up systemd configuration..."
 
 ynh_backup --src_path="/etc/systemd/system/$app.service"
+
+#=================================================
+# START SYSTEMD SERVICE
+#=================================================
+ynh_script_progression --message="Starting a systemd service..." --time --weight=1
+
+ynh_systemd_action --service_name=$app --action="start" --log_path=systemd --line_match="Started Distbin Service"
 
 #=================================================
 # END OF SCRIPT

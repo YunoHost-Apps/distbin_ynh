@@ -36,6 +36,23 @@ final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 port=$(ynh_app_setting_get --app=$app --key=port)
 
 #=================================================
+# BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
+#=================================================
+ynh_script_progression --message="Backing up the app before changing its url (may take a while)..." --time --weight=1
+
+# Backup the current version of the app
+ynh_backup_before_upgrade
+ynh_clean_setup () {
+	# Remove the new domain config file, the remove script won't do it as it doesn't know yet its location.
+	ynh_secure_remove --file="/etc/nginx/conf.d/$new_domain.d/$app.conf"
+
+	# restore it if the upgrade fails
+	ynh_restore_upgradebackup
+}
+# Exit if an error occurs during the execution of the script
+ynh_abort_if_errors
+
+#=================================================
 # CHECK WHICH PARTS SHOULD BE CHANGED
 #=================================================
 
@@ -58,7 +75,7 @@ fi
 #=================================================
 ynh_print_info --message="Stopping a systemd service..."
 
-ynh_systemd_action --service_name=$app --action=stop --log_path=systemd --line_match="Stopped Distbin Service"
+ynh_systemd_action --service_name=$app --action="stop" --log_path=systemd --line_match="Stopped Distbin Service"
 
 #=================================================
 # MODIFY URL IN NGINX CONF
@@ -96,6 +113,9 @@ fi
 #=================================================
 ynh_print_info --message="Modifying config file..."
 
+config="$final_path/.env"
+ynh_backup_if_checksum_is_different --file="$config"
+
 # Change the URL in the configuration file
 
 if [ "$new_path" == "/" ]
@@ -105,16 +125,16 @@ else
     new_domain_uri="$new_domain$new_path"
 fi
 
-ynh_replace_string --match_string="EXTERNAL_URL=.*" --replace_string="EXTERNAL_URL=https://$new_domain_uri/" --target_file="$final_path/.env"
+ynh_replace_string --match_string="EXTERNAL_URL=.*" --replace_string="EXTERNAL_URL=https://$new_domain_uri/" --target_file="$config"
 
 #=================================================
 # STORE THE CONFIG FILE CHECKSUM
 #=================================================
 ynh_print_info --message="Storing the config file checksum..."
 
-ynh_backup_if_checksum_is_different --file="$final_path/.env"
+
 # Recalculate and store the checksum of the file for the next upgrade.
-ynh_store_file_checksum --file="$final_path/.env"
+ynh_store_file_checksum --file="$config"
 
 #=================================================
 # GENERIC FINALISATION
@@ -131,7 +151,7 @@ sleep 10
 #=================================================
 ynh_print_info --message="Reloading nginx web server..."
 
-systemctl reload nginx
+ynh_systemd_action --service_name=nginx --action=reload
 
 #=================================================
 # END OF SCRIPT

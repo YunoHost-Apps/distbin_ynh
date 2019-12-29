@@ -70,17 +70,16 @@ ynh_abort_if_errors
 #=================================================
 ynh_print_info --message="Stopping a systemd service..."
 
-ynh_systemd_action --service_name=$app --action=stop
+ynh_systemd_action --service_name=$app --action="stop" --log_path=systemd --line_match="Stopped Distbin Service"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_print_info --message="Upgrading source files..."
 
-# Download, check integrity, uncompress and patch the source from app.src#
 if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
-	ynh_script_progression --message="Upgrading source files..." --time --weight=1
+	ynh_print_info --message="Upgrading source files..."
 
 	# Download, check integrity, uncompress and patch the source from app.src
 	ynh_setup_source --dest_dir="$final_path"
@@ -132,9 +131,9 @@ if [ -d "$DIRECTORY" ]; then
 fi
 
 #=================================================
-# MAKE INSTALL
+# MAKE UPGRADE
 #=================================================
-ynh_print_info --message="Making install..."
+ynh_print_info --message="Making upgrade..."
 
 chown -R "$app":"$app" "$final_path"
 pushd $final_path
@@ -153,8 +152,9 @@ popd
 #=================================================
 ynh_print_info --message="Modifying config file..."
 
-ynh_backup_if_checksum_is_different --file="$final_path/.env"
-cp "../conf/.env" "$final_path/.env"
+config="$final_path/.env"
+ynh_backup_if_checksum_is_different --file="$config"
+cp -f "../conf/.env" "$config"
 
 if [ "$path_url" == "/" ]
 then
@@ -163,10 +163,10 @@ else
     domain_uri="$domain$path_url"
 fi
 
-ynh_replace_string --match_string="__NODEJS_PATH__" --replace_string="$nodejs_path" --target_file="$final_path/.env"
-ynh_replace_string --match_string="__PORT__" --replace_string="$port" --target_file="$final_path/.env"
-ynh_replace_string --match_string="__DOMAIN_URI__" --replace_string="$domain_uri" --target_file="$final_path/.env"
-ynh_replace_string --match_string="__FINALPATH__" --replace_string="$final_path" --target_file="$final_path/.env"
+ynh_replace_string --match_string="__NODEJS_PATH__" --replace_string="$nodejs_path" --target_file="$config"
+ynh_replace_string --match_string="__PORT__" --replace_string="$port" --target_file="$config"
+ynh_replace_string --match_string="__DOMAIN_URI__" --replace_string="$domain_uri" --target_file="$config"
+ynh_replace_string --match_string="__FINALPATH__" --replace_string="$final_path" --target_file="$config"
 
 #=================================================
 # STORE THE CONFIG FILE CHECKSUM
@@ -174,7 +174,7 @@ ynh_replace_string --match_string="__FINALPATH__" --replace_string="$final_path"
 ynh_print_info --message="Storing the config file checksum..."
 
 # Recalculate and store the checksum of the file for the next upgrade.
-ynh_store_file_checksum --file="$final_path/.env"
+ynh_store_file_checksum --file="$config"
 
 #=================================================
 # SETUP LOGROTATE
@@ -219,7 +219,7 @@ fi
 #=================================================
 ynh_print_info --message="Starting a systemd service..."
 
-ynh_systemd_action --action=start --service_name=$app --log_path=systemd --line_match="Started Distbin Service"
+ynh_systemd_action --service_name=$app --action="start" --log_path=systemd --line_match="Started Distbin Service"
 sleep 10
 
 #=================================================

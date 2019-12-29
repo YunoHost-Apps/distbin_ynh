@@ -56,9 +56,16 @@ ynh_app_setting_set --app=$app --key=is_public --value=$is_public
 #=================================================
 ynh_print_info --message="Configuring firewall..."
 
-# Find a free port
+# Find an available port
 port=$(ynh_find_port --port=8095)
 ynh_app_setting_set --app=$app --key=port --value=$port
+
+# Optional: Expose this port publicly
+# (N.B. : you only need to do this if the app actually needs to expose the port publicly.
+# If you do this and the app doesn't actually need you are CREATING SECURITY HOLES IN THE SERVER !)
+
+# Open the port
+# ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $port
 
 #=================================================
 # INSTALL DEPENDENCIES
@@ -143,7 +150,8 @@ ynh_add_systemd_config
 #=================================================
 ynh_print_info --message="Modifying a config file..."
 
-cp "../conf/.env" "$final_path/.env"
+config="$final_path/.env"
+cp "../conf/.env" "$config"
 
 if [ "$path_url" == "/" ]
 then
@@ -152,10 +160,10 @@ else
     domain_uri="$domain$path_url"
 fi
 
-ynh_replace_string --match_string="__NODEJS_PATH__" --replace_string="$nodejs_path" --target_file="$final_path/.env"
-ynh_replace_string --match_string="__PORT__" --replace_string="$port" --target_file="$final_path/.env"
-ynh_replace_string --match_string="__DOMAIN_URI__" --replace_string="$domain_uri" --target_file="$final_path/.env"
-ynh_replace_string --match_string="__FINALPATH__" --replace_string="$final_path" --target_file="$final_path/.env"
+ynh_replace_string --match_string="__NODEJS_PATH__" --replace_string="$nodejs_path" --target_file="$config"
+ynh_replace_string --match_string="__PORT__" --replace_string="$port" --target_file="$config"
+ynh_replace_string --match_string="__DOMAIN_URI__" --replace_string="$domain_uri" --target_file="$config"
+ynh_replace_string --match_string="__FINALPATH__" --replace_string="$final_path" --target_file="$config"
 
 #=================================================
 # STORE THE CONFIG FILE CHECKSUM
@@ -163,7 +171,7 @@ ynh_replace_string --match_string="__FINALPATH__" --replace_string="$final_path"
 ynh_print_info --message="Storing the config file checksum..."
 
 # Calculate and store the config file checksum into the app settings
-ynh_store_file_checksum --file="$final_path/.env"
+ynh_store_file_checksum --file="$config"
 
 #=================================================
 # GENERIC FINALIZATION
@@ -184,12 +192,10 @@ ynh_print_info --message="Configuring log rotation..."
 ynh_use_logrotate
 
 #=================================================
-# ADVERTISE SERVICE IN ADMIN PANEL
+# INTEGRATE SERVICE IN YUNOHOST
 #=================================================
-ynh_print_info --message="Advertising service in admin panel..."
+ynh_print_info --message="Integrate service in YunoHost..."
 
-#yunohost service add $app --log "/var/log/$app/$app.log"
-# if using yunohost version 3.2 or more in the 'manifest.json', a description can be added
 yunohost service add $app --description "$app daemon for distbin" --log "/var/log/$app/$app.log"
 
 #=================================================
@@ -197,7 +203,8 @@ yunohost service add $app --description "$app daemon for distbin" --log "/var/lo
 #=================================================
 ynh_print_info --message="Starting a systemd service..."
 
-ynh_systemd_action --service_name=$app --action=start --log_path=systemd --line_match="Started Distbin Service"
+# Start a systemd service
+ynh_systemd_action --service_name=$app --action="start" --log_path=systemd --line_match="Started Distbin Service"
 sleep 10
 
 #=================================================

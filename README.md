@@ -23,7 +23,7 @@ A networked place to store posted web documents. This is meant to allow for dist
 
 ## Configuration
 
-No configuration parameter available for now.
+No configuration parameters available for now.
 
 ## YunoHost specific features
 
@@ -37,17 +37,16 @@ The app can be used by multiple users, anonymously.
 
 * x86-64b - [![Build Status](https://ci-apps.yunohost.org/ci/logs/distbin%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/distbin/)
 * ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/distbin%20%28Apps%29.svg)](https://ci-apps-arm.yunohost.org/ci/apps/distbin/)
-* Jessie x86-64b - [![Build Status](https://ci-stretch.nohost.me/ci/logs/distbin%20%28Apps%29.svg)](https://ci-stretch.nohost.me/ci/apps/distbin/)
 
 ## Limitations
 
-* No known limitations. But still developping.
+* No known limitations.
 
 ## Links
 
  * Report a bug: https://github.com/YunoHost-Apps/distbin_ynh/issues
  * App website: https://distbin.com/about
- * GitHub website: https://github.com/gobengo/distbin
+ * Upstream app repository: https://github.com/gobengo/distbin
  * YunoHost website: https://yunohost.org/
 
 ---
@@ -55,7 +54,6 @@ The app can be used by multiple users, anonymously.
 Developers info
 ----------------
 
-**Only if you want to use a testing branch for coding, instead of merging directly into master.**
 Please do your pull request to the [testing branch](https://github.com/YunoHost-Apps/distbin_ynh/tree/testing).
 
 To try the testing branch, please proceed like that.

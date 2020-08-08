@@ -113,22 +113,10 @@ fi
 #=================================================
 ynh_script_progression --message="Modifying config file..."
 
-config="$final_path/.env"
-ynh_backup_if_checksum_is_different --file="$config"
+domain="$new_domain"
+path_url="$new_path"
 
-# Change the URL in the configuration file
-
-if [ "$new_path" == "/" ]
-then
-    new_domain_uri="$new_domain"
-else
-    new_domain_uri="$new_domain$new_path"
-fi
-
-ynh_replace_string --match_string="EXTERNAL_URL=.*" --replace_string="EXTERNAL_URL=https://$new_domain_uri/" --target_file="$config"
-
-# Recalculate and store the checksum of the file for the next upgrade.
-ynh_store_file_checksum --file="$config"
+ynh_add_config --template="../conf/.env" --destination="$final_path/.env"
 
 #=================================================
 # GENERIC FINALISATION

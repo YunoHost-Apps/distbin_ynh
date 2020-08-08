@@ -141,13 +141,13 @@ chown -R "$app":"$app" "$final_path"
 
 pushd $final_path
     ynh_use_nodejs
-    sudo -u $app env PATH=$PATH npm install --ignore-scripts
-    sudo -u $app env PATH=$PATH npm run build
+    sudo -u $app $ynh_node_load_PATH $ynh_npm install --ignore-scripts
+    sudo -u $app $ynh_node_load_PATH $ynh_npm run build
 	cp package* dist/ 
 popd
 
 pushd $final_path/dist
-    sudo -u $app env PATH=$PATH npm install --ignore-scripts  --production
+    sudo -u $app $ynh_node_load_PATH $ynh_npm install --ignore-scripts  --production
 popd
 
 #=================================================

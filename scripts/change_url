@@ -114,6 +114,8 @@ fi
 #=================================================
 ynh_script_progression --message="Modifying config file..."
 
+ynh_use_nodejs
+
 domain="$new_domain"
 path_url="$new_path"
 

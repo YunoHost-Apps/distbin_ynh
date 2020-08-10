@@ -112,14 +112,30 @@ fi
 #=================================================
 # MODIFY A CONFIG FILE
 #=================================================
-ynh_script_progression --message="Modifying config file..."
+ynh_print_info --message="Modifying config file..."
 
-ynh_use_nodejs
+config="$final_path/.env"
+ynh_backup_if_checksum_is_different --file="$config"
 
-domain="$new_domain"
-path_url="$new_path"
+# Change the URL in the configuration file
 
-ynh_add_config --template="../conf/.env" --destination="$final_path/.env"
+if [ "$new_path" == "/" ]
+then
+    new_domain_uri="$new_domain"
+else
+    new_domain_uri="$new_domain$new_path"
+fi
+
+ynh_replace_string --match_string="EXTERNAL_URL=.*" --replace_string="EXTERNAL_URL=https://$new_domain_uri/" --target_file="$config"
+
+#=================================================
+# STORE THE CONFIG FILE CHECKSUM
+#=================================================
+ynh_print_info --message="Storing the config file checksum..."
+
+
+# Recalculate and store the checksum of the file for the next upgrade.
+ynh_store_file_checksum --file="$config"
 
 #=================================================
 # GENERIC FINALISATION

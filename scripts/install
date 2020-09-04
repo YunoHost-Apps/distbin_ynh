@@ -7,12 +7,12 @@
 #=================================================
 
 source _common.sh
+source ynh_add_config
 source /usr/share/yunohost/helpers
 
 #=================================================
 # MANAGE SCRIPT FAILURE
 #=================================================
-ynh_print_info --message="Managing script failure..."
 
 ynh_clean_setup () {
 	ynh_clean_check_starting
@@ -23,7 +23,6 @@ ynh_abort_if_errors
 #=================================================
 # RETRIEVE ARGUMENTS FROM THE MANIFEST
 #=================================================
-ynh_print_info --message="Retrieving arguments from the manifest..."
 
 domain=$YNH_APP_ARG_DOMAIN
 path_url=$YNH_APP_ARG_PATH
@@ -34,7 +33,7 @@ app=$YNH_APP_INSTANCE_NAME
 #=================================================
 # CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
 #=================================================
-ynh_print_info --message="Validating installation parameters..."
+ynh_script_progression --message="Validating installation parameters..."
 
 final_path=/var/www/$app
 test ! -e "$final_path" || ynh_die --message="This path already contains a folder"
@@ -45,7 +44,7 @@ ynh_webpath_register --app=$app --domain=$domain --path_url=$path_url
 #=================================================
 # STORE SETTINGS FROM MANIFEST
 #=================================================
-ynh_print_info --message="Storing installation settings..."
+ynh_script_progression --message="Storing installation settings..."
 
 ynh_app_setting_set --app=$app --key=domain --value=$domain
 ynh_app_setting_set --app=$app --key=path --value=$path_url
@@ -56,7 +55,7 @@ ynh_app_setting_set --app=$app --key=is_public --value=$is_public
 #=================================================
 # FIND AND OPEN A PORT
 #=================================================
-ynh_print_info --message="Configuring firewall..."
+ynh_script_progression --message="Configuring firewall..."
 
 # Find an available port
 port=$(ynh_find_port --port=8095)
@@ -72,15 +71,15 @@ ynh_app_setting_set --app=$app --key=port --value=$port
 #=================================================
 # INSTALL DEPENDENCIES
 #=================================================
-ynh_print_info --message="Installing dependencies..."
+ynh_script_progression --message="Installing dependencies..."
 
 ynh_install_app_dependencies $pkg_dependencies
-ynh_install_nodejs --nodejs_version="10"
+ynh_install_nodejs --nodejs_version=$nodejs_version
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_print_info --message="Setting up source files..."
+ynh_script_progression --message="Setting up source files..."
 
 ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 # Download, check integrity, uncompress and patch the source from app.src
@@ -89,7 +88,7 @@ ynh_setup_source --dest_dir="$final_path"
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_print_info --message="Configuring nginx web server..."
+ynh_script_progression --message="Configuring nginx web server..."
 
 # Create a dedicated nginx config
 ynh_add_nginx_config
@@ -97,7 +96,7 @@ ynh_add_nginx_config
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
-ynh_print_info --message="Configuring system user..."
+ynh_script_progression --message="Configuring system user..."
 
 # Create a system user
 ynh_system_user_create --username="$app" --home_dir="$final_path"
@@ -107,7 +106,7 @@ ynh_system_user_create --username="$app" --home_dir="$final_path"
 #=================================================
 # CREATE LOG FOLDER
 #=================================================
-ynh_print_info --message="Creating log folder..."
+ynh_script_progression --message="Creating log folder..."
 
 mkdir -p "/var/log/$app"
 chown -R "$app":"$app" "/var/log/$app"
@@ -115,7 +114,7 @@ chown -R "$app":"$app" "/var/log/$app"
 #=================================================
 # CREATE DB FOLDER
 #=================================================
-ynh_print_info --message="Creating DB folder..."
+ynh_script_progression --message="Creating DB folder..."
 
 mkdir -p "$final_path/distbin-db"
 mkdir -p "$final_path/distbin-db/activities"
@@ -124,25 +123,25 @@ mkdir -p "$final_path/distbin-db/inbox"
 #=================================================
 # INSTALLING DISTBIN
 #=================================================
-ynh_print_info --message="Installing distin..."
+ynh_script_progression --message="Installing distin..."
 
 chown -R "$app":"$app" "$final_path"
 
 pushd $final_path
     ynh_use_nodejs
-    sudo -u $app env PATH=$PATH npm install --ignore-scripts
-    sudo -u $app env PATH=$PATH npm run build
+    sudo -u $app $ynh_node_load_PATH $ynh_npm install --ignore-scripts
+    sudo -u $app $ynh_node_load_PATH $ynh_npm run build
 	cp package* dist/ 
 popd
 
 pushd $final_path/dist
-    sudo -u $app env PATH=$PATH npm install --ignore-scripts  --production
+    sudo -u $app $ynh_node_load_PATH $ynh_npm install --ignore-scripts  --production
 popd
 
 #=================================================
 # SETUP SYSTEMD
 #=================================================
-ynh_print_info --message="Configuring a systemd service..."
+ynh_script_progression --message="Configuring a systemd service..."
 
 # Create a dedicated systemd config
 ynh_add_systemd_config
@@ -150,37 +149,16 @@ ynh_add_systemd_config
 #=================================================
 # MODIFY A CONFIG FILE
 #=================================================
-ynh_print_info --message="Modifying a config file..."
+ynh_script_progression --message="Modifying a config file..."
 
-config="$final_path/.env"
-cp "../conf/.env" "$config"
-
-if [ "$path_url" == "/" ]
-then
-    domain_uri="$domain"
-else
-    domain_uri="$domain$path_url"
-fi
-
-ynh_replace_string --match_string="__NODEJS_PATH__" --replace_string="$nodejs_path" --target_file="$config"
-ynh_replace_string --match_string="__PORT__" --replace_string="$port" --target_file="$config"
-ynh_replace_string --match_string="__DOMAIN_URI__" --replace_string="$domain_uri" --target_file="$config"
-ynh_replace_string --match_string="__FINALPATH__" --replace_string="$final_path" --target_file="$config"
-
-#=================================================
-# STORE THE CONFIG FILE CHECKSUM
-#=================================================
-ynh_print_info --message="Storing the config file checksum..."
-
-# Calculate and store the config file checksum into the app settings
-ynh_store_file_checksum --file="$config"
+ynh_add_config --template="../conf/.env" --destination="$final_path/.env"
 
 #=================================================
 # GENERIC FINALIZATION
 #=================================================
 # SECURE FILES AND DIRECTORIES
 #=================================================
-ynh_print_info --message="Securing files and directories..."
+ynh_script_progression --message="Securing files and directories..."
 
 # Set permissions to app files
 chown -R "$app":"$app" "$final_path"
@@ -188,7 +166,7 @@ chown -R "$app":"$app" "$final_path"
 #=================================================
 # SETUP LOGROTATE
 #=================================================
-ynh_print_info --message="Configuring log rotation..."
+ynh_script_progression --message="Configuring log rotation..."
 
 # Use logrotate to manage application logfile(s)
 ynh_use_logrotate
@@ -196,14 +174,14 @@ ynh_use_logrotate
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================
-ynh_print_info --message="Integrating service in YunoHost..."
+ynh_script_progression --message="Integrating service in YunoHost..."
 
 yunohost service add $app --description "$app daemon for distbin" --log "/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_print_info --message="Starting a systemd service..."
+ynh_script_progression --message="Starting a systemd service..."
 
 # Start a systemd service
 ynh_systemd_action --service_name=$app --action="start" --log_path=systemd --line_match="Started Distbin Service"
@@ -214,7 +192,7 @@ fi
 #=================================================
 # SETUP SSOWAT
 #=================================================
-ynh_print_info --message="Configuring SSOwat..."
+ynh_script_progression --message="Configuring SSOwat..."
 
 # Make app public if necessary
 if [ $is_public -eq 1 ]
@@ -226,7 +204,7 @@ fi
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_print_info --message="Reloading nginx web server..."
+ynh_script_progression --message="Reloading nginx web server..."
 
 ynh_systemd_action --service_name=nginx --action=reload
 
@@ -234,4 +212,4 @@ ynh_systemd_action --service_name=nginx --action=reload
 # END OF SCRIPT
 #=================================================
 
-ynh_print_info --message="Installation of $app completed"
+ynh_script_progression --message="Installation of $app completed"

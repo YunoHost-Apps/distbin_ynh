@@ -1,10 +1,10 @@
-# distbin app for YunoHost
+# Distbin for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/distbin.svg)](https://dash.yunohost.org/appci/app/distbin)  
+[![Integration level](https://dash.yunohost.org/integration/distbin.svg)](https://dash.yunohost.org/appci/app/distbin) ![](https://ci-apps.yunohost.org/ci/badges/distbin.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/distbin.maintain.svg)  
 [![Install distbin with YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=distbin)
 
-> *This package allow you to install distbin quickly and simply on a YunoHost server.  
-If you don't have YunoHost, please see [here](https://yunohost.org/#/install) to know how to install and enjoy it.*
+> *This package allows you to install distbin quickly and simply on a YunoHost server.  
+If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/install) to learn how to install it.*
 
 ## Overview
 A distributed pastebin. i.e. it is a service where anyone can post things on the web, and others can react by posting anywhere else on the web (including here). .
@@ -27,7 +27,7 @@ No configuration parameters available for now.
 
 ## YunoHost specific features
 
-#### Multi-users support
+#### Multi-user support
 
 LDAP and HTTP are not supported.
 
@@ -35,7 +35,7 @@ The app can be used by multiple users, anonymously.
 
 #### Supported architectures
 
-* x86-64b - [![Build Status](https://ci-apps.yunohost.org/ci/logs/distbin%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/distbin/)
+* x86-64 - [![Build Status](https://ci-apps.yunohost.org/ci/logs/distbin%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/distbin/)
 * ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/distbin%20%28Apps%29.svg)](https://ci-apps-arm.yunohost.org/ci/apps/distbin/)
 
 ## Limitations
@@ -51,10 +51,10 @@ The app can be used by multiple users, anonymously.
 
 ---
 
-Developers info
+Developer info
 ----------------
 
-Please do your pull request to the [testing branch](https://github.com/YunoHost-Apps/distbin_ynh/tree/testing).
+Please send your pull request to the [testing branch](https://github.com/YunoHost-Apps/distbin_ynh/tree/testing).
 
 To try the testing branch, please proceed like that.
 ```

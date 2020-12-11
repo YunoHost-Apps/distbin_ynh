@@ -61,13 +61,6 @@ ynh_script_progression --message="Configuring firewall..."
 port=$(ynh_find_port --port=8095)
 ynh_app_setting_set --app=$app --key=port --value=$port
 
-# Optional: Expose this port publicly
-# (N.B. : you only need to do this if the app actually needs to expose the port publicly.
-# If you do this and the app doesn't actually need you are CREATING SECURITY HOLES IN THE SERVER !)
-
-# Open the port
-# ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $port
-
 #=================================================
 # INSTALL DEPENDENCIES
 #=================================================
@@ -88,7 +81,7 @@ ynh_setup_source --dest_dir="$final_path"
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Configuring nginx web server..."
+ynh_script_progression --message="Configuring NGINX web server..."
 
 # Create a dedicated nginx config
 ynh_add_nginx_config
@@ -123,7 +116,7 @@ mkdir -p "$final_path/distbin-db/inbox"
 #=================================================
 # INSTALLING DISTBIN
 #=================================================
-ynh_script_progression --message="Installing distin..."
+ynh_script_progression --message="Installing Distbin..."
 
 chown -R "$app":"$app" "$final_path"
 
@@ -135,7 +128,7 @@ pushd $final_path
 popd
 
 pushd $final_path/dist
-    sudo -u $app $ynh_node_load_PATH $ynh_npm install --ignore-scripts  --production
+    sudo -u $app $ynh_node_load_PATH $ynh_npm install --ignore-scripts --production
 popd
 
 #=================================================
@@ -176,7 +169,7 @@ ynh_use_logrotate
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..."
 
-yunohost service add $app --description "$app daemon for distbin" --log "/var/log/$app/$app.log"
+yunohost service add $app --description="$app daemon for Distbin" --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
@@ -204,7 +197,7 @@ fi
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_script_progression --message="Reloading nginx web server..."
+ynh_script_progression --message="Reloading NGINX web server..."
 
 ynh_systemd_action --service_name=nginx --action=reload
 

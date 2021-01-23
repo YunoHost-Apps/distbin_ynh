@@ -25,8 +25,8 @@
                 "name": "domain",
                 "type": "domain",
                 "ask": {
-                    "en": "Choose a domain name for distbin",
-                    "fr": "Choisissez un nom de domaine pour distbin"
+                    "en": "Choose a domain name for Distbin",
+                    "fr": "Choisissez un nom de domaine pour Distbin"
                 },
                 "example": "distbin.example.com"
             },
@@ -34,8 +34,8 @@
                 "name": "path",
                 "type": "path",
                 "ask": {
-                    "en": "Choose a path for distbin",
-                    "fr": "Choisissez un chemin pour distbin"
+                    "en": "Choose a path for Distbin",
+                    "fr": "Choisissez un chemin pour Distbin"
                 },
                 "example": "/distbin",
                 "default": "/distbin"

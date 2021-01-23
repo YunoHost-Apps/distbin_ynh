@@ -119,7 +119,7 @@ ynh_system_user_create --username=$app --home_dir=$final_path
 ynh_script_progression --message="Creating log folder..."
 
 mkdir -p "/var/log/$app"
-chown -R "$app":"$app" "/var/log/$app"
+chown -R $app:$app "/var/log/$app"
 
 #=================================================
 # CREATE STORAGE FOLDER
@@ -188,7 +188,7 @@ ynh_use_logrotate --non-append
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..."
 
-yunohost service add $app --description="$app daemon for distbin" --log="/var/log/$app/$app.log"
+yunohost service add $app --description="Distributed pastebin" --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
@@ -198,18 +198,6 @@ ynh_script_progression --message="Starting a systemd service..."
 ynh_systemd_action --service_name=$app --action="start" --log_path=systemd --line_match="Started Distbin Service"
 if [ ${PACKAGE_CHECK_EXEC:-0} -eq 1 ]; then
 	sleep 60
-fi
-
-#=================================================
-# SETUP SSOWAT
-#=================================================
-ynh_script_progression --message="Upgrading SSOwat configuration..."
-
-# Make app public if necessary
-if [ $is_public -eq 1 ]
-then
-	# unprotected_uris allows SSO credentials to be passed anyway
-	ynh_app_setting_set --app=$app --key=unprotected_uris --value="/"
 fi
 
 #=================================================

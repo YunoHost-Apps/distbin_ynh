@@ -3,7 +3,7 @@
 [![Integration level](https://dash.yunohost.org/integration/distbin.svg)](https://dash.yunohost.org/appci/app/distbin) ![](https://ci-apps.yunohost.org/ci/badges/distbin.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/distbin.maintain.svg)  
 [![Install distbin with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=distbin)
 
-> *This package allows you to install distbin quickly and simply on a YunoHost server.  
+> *This package allows you to install Distbin quickly and simply on a YunoHost server.  
 If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/install) to learn how to install it.*
 
 ## Overview

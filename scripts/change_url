@@ -7,7 +7,6 @@
 #=================================================
 
 source _common.sh
-source ynh_add_config
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -116,9 +115,9 @@ ynh_backup_if_checksum_is_different --file="$config"
 
 if [ "$new_path" == "/" ]
 then
-    new_domain_uri="$new_domain"
+	new_domain_uri="$new_domain"
 else
-    new_domain_uri="$new_domain$new_path"
+	new_domain_uri="$new_domain$new_path"
 fi
 
 ynh_replace_string --match_string="EXTERNAL_URL=.*" --replace_string="EXTERNAL_URL=https://$new_domain_uri/" --target_file="$config"
@@ -127,7 +126,6 @@ ynh_replace_string --match_string="EXTERNAL_URL=.*" --replace_string="EXTERNAL_U
 # STORE THE CONFIG FILE CHECKSUM
 #=================================================
 ynh_print_info --message="Storing the config file checksum..."
-
 
 # Recalculate and store the checksum of the file for the next upgrade.
 ynh_store_file_checksum --file="$config"

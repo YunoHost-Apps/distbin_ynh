@@ -65,7 +65,7 @@ ynh_app_setting_set --app=$app --key=port --value=$port
 ynh_script_progression --message="Installing dependencies..."
 
 ynh_install_app_dependencies $pkg_dependencies
-ynh_install_nodejs --nodejs_version=$nodejs_version
+ynh_install_nodejs --nodejs_version=$NODEJS_VERSION
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -81,7 +81,7 @@ ynh_setup_source --dest_dir="$final_path"
 #=================================================
 ynh_script_progression --message="Configuring NGINX web server..."
 
-# Create a dedicated nginx config
+# Create a dedicated NGINX config
 ynh_add_nginx_config
 
 #=================================================
@@ -90,7 +90,7 @@ ynh_add_nginx_config
 ynh_script_progression --message="Configuring system user..."
 
 # Create a system user
-ynh_system_user_create --username="$app" --home_dir="$final_path"
+ynh_system_user_create --username=$app --home_dir="$final_path"
 
 #=================================================
 # SPECIFIC SETUP
@@ -120,13 +120,13 @@ chown -R "$app":"$app" "$final_path"
 
 pushd $final_path
 	ynh_use_nodejs
-	sudo -u $app $ynh_node_load_PATH $ynh_npm install --ignore-scripts
-	sudo -u $app $ynh_node_load_PATH $ynh_npm run build
+	ynh_exec_warn_less sudo -u $app $ynh_node_load_PATH $ynh_npm install --ignore-scripts
+	ynh_exec_warn_less sudo -u $app $ynh_node_load_PATH $ynh_npm run build
 	cp package* dist/ 
 popd
 
 pushd $final_path/dist
-	sudo -u $app $ynh_node_load_PATH $ynh_npm install --ignore-scripts --production
+	ynh_exec_warn_less sudo -u $app $ynh_node_load_PATH $ynh_npm install --ignore-scripts --production
 popd
 
 #=================================================
@@ -152,7 +152,7 @@ ynh_add_config --template="../conf/.env" --destination="$final_path/.env"
 ynh_script_progression --message="Securing files and directories..."
 
 # Set permissions to app files
-chown -R "$app":"$app" "$final_path"
+chown -R $app:$app $final_path
 
 #=================================================
 # SETUP LOGROTATE

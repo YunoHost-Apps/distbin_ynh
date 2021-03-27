@@ -7,7 +7,7 @@
 # dependencies used by the app
 pkg_dependencies="ca-certificates curl sudo"
 
-nodejs_version=10
+NODEJS_VERSION=10
 
 #=================================================
 # PERSONAL HELPERS

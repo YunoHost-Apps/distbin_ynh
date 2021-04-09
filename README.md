@@ -35,8 +35,8 @@ The app can be used by multiple users, anonymously.
 
 #### Supported architectures
 
-* x86-64 - [![Build Status](https://ci-apps.yunohost.org/ci/logs/distbin%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/distbin/)
-* ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/distbin%20%28Apps%29.svg)](https://ci-apps-arm.yunohost.org/ci/apps/distbin/)
+* x86-64 - [![Build Status](https://ci-apps.yunohost.org/ci/logs/distbin.svg)](https://ci-apps.yunohost.org/ci/apps/distbin/)
+* ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/distbin.svg)](https://ci-apps-arm.yunohost.org/ci/apps/distbin/)
 
 ## Limitations
 

@@ -29,7 +29,7 @@ A networked place to store posted web documents. This is meant to allow for dist
 - Excepteur sint occaecat cupidatat non proident, sunt in culpa."
 
 
-**Version incluse :** 1.3.0~ynh9
+**Version incluse :** 1.3.0~ynh10
 
 **Démo :** https://distbin.com/
 

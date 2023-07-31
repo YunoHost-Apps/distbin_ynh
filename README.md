@@ -5,7 +5,8 @@ It shall NOT be edited by hand.
 
 # Distbin for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/distbin.svg)](https://dash.yunohost.org/appci/app/distbin) ![](https://ci-apps.yunohost.org/ci/badges/distbin.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/distbin.maintain.svg)  
+[![Integration level](https://dash.yunohost.org/integration/distbin.svg)](https://dash.yunohost.org/appci/app/distbin) ![Working status](https://ci-apps.yunohost.org/ci/badges/distbin.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/distbin.maintain.svg)
+
 [![Install Distbin with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=distbin)
 
 *[Lire ce readme en français.](./README_fr.md)*
@@ -28,13 +29,13 @@ A networked place to store posted web documents. This is meant to allow for dist
 - Excepteur sint occaecat cupidatat non proident, sunt in culpa."
 
 
-**Shipped version:** 1.3.0~ynh9
+**Shipped version:** 1.3.0~ynh10
 
 **Demo:** https://distbin.com/
 
 ## Screenshots
 
-![](./doc/screenshots/screenshot.PNG)
+![Screenshot of Distbin](./doc/screenshots/screenshot.PNG)
 
 ## Disclaimers / important information
 
@@ -42,20 +43,21 @@ A networked place to store posted web documents. This is meant to allow for dist
 
 ## Documentation and resources
 
-* Official app website: https://distbin.com/about
-* Upstream app code repository: https://github.com/gobengo/distbin
-* YunoHost documentation for this app: https://yunohost.org/app_distbin
-* Report a bug: https://github.com/YunoHost-Apps/distbin_ynh/issues
+* Official app website: <https://distbin.com/about>
+* Upstream app code repository: <https://github.com/gobengo/distbin>
+* YunoHost documentation for this app: <https://yunohost.org/app_distbin>
+* Report a bug: <https://github.com/YunoHost-Apps/distbin_ynh/issues>
 
 ## Developer info
 
 Please send your pull request to the [testing branch](https://github.com/YunoHost-Apps/distbin_ynh/tree/testing).
 
 To try the testing branch, please proceed like that.
-```
+
+``` bash
 sudo yunohost app install https://github.com/YunoHost-Apps/distbin_ynh/tree/testing --debug
 or
 sudo yunohost app upgrade distbin -u https://github.com/YunoHost-Apps/distbin_ynh/tree/testing --debug
 ```
 
-**More info regarding app packaging:** https://yunohost.org/packaging_apps
+**More info regarding app packaging:** <https://yunohost.org/packaging_apps>

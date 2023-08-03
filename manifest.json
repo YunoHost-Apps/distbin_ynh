@@ -6,7 +6,7 @@
         "en": "Distributed pastebin with ActivityPub.",
         "fr": "Pastebin distribué utilisant le protocole ActivityPub."
     },
-    "version": "1.3.0~ynh10",
+    "version": "1.3.0~ynh11",
     "url": "https://distbin.com",
     "upstream": {
         "license": "Apache-2.0",

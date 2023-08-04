@@ -51,7 +51,7 @@ ynh_abort_if_errors
 #=================================================
 ynh_script_progression --message="Stopping a systemd service..."
 
-ynh_systemd_action --service_name=$app --action="stop" --log_path=systemd --line_match="Stopped Distbin Service"
+ynh_systemd_action --service_name=$app --action="stop" --log_path=systemd --line_match="Stopped"
 
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
@@ -203,7 +203,7 @@ yunohost service add $app --description="Distributed pastebin" --log="/var/log/$
 #=================================================
 ynh_script_progression --message="Starting a systemd service..."
 
-ynh_systemd_action --service_name=$app --action="start" --log_path=systemd --line_match="Started Distbin Service"
+ynh_systemd_action --service_name=$app --action="start" --log_path=systemd --line_match="Started"
 
 if [ ${PACKAGE_CHECK_EXEC:-0} -eq 1 ]; then
 	sleep 60

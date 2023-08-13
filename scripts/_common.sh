@@ -5,7 +5,7 @@
 #=================================================
 
 # dependencies used by the app
-pkg_dependencies="ca-certificates curl sudo rsync"
+pkg_dependencies="ca-certificates curl rsync"
 
 NODEJS_VERSION=10
 

@@ -1,5 +1,5 @@
 [Unit]
-Description=Distbin Service
+Description=Distbin: istributed pastebin
 After=network.target
 
 [Service]

@@ -29,10 +29,6 @@ A networked place to store posted web documents. This is meant to allow for dist
 
 ![Capture d’écran de Distbin](./doc/screenshots/screenshot.PNG)
 
-## Avertissements / informations importantes
-
-* No configuration parameters available for now.
-
 ## Documentations et ressources
 
 * Site officiel de l’app : <https://distbin.com/about>

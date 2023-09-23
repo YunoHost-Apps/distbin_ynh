@@ -2,8 +2,8 @@ packaging_format = 2
 
 id = "distbin"
 name = "Distbin"
-description.en = "Distributed pastebin with ActivityPub."
-description.fr = "Pastebin distribué utilisant le protocole ActivityPub."
+description.en = "Distributed pastebin with ActivityPub"
+description.fr = "Pastebin distribué utilisant le protocole ActivityPub"
 
 version = "1.3.0~ynh12"
 
@@ -41,6 +41,7 @@ ram.runtime = "50M"
         [resources.sources.main]
         url = "https://github.com/gobengo/distbin/archive/v1.3.0.tar.gz"
         sha256 = "65d9774cafbb5829b82d09b0ea0d3d5d1ec5f076fadef2b8576d29a901c58a90"
+        autoupdate.strategy = "latest_github_tag"
 
     [resources.system_user]
 
@@ -55,4 +56,4 @@ ram.runtime = "50M"
     main.url = "/"
 
     [resources.apt]
-    packages = "ca-certificates curl rsync"
+    packages = "ca-certificates, curl, rsync"

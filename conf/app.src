@@ -1,7 +1,0 @@
-SOURCE_URL=https://github.com/gobengo/distbin/archive/v1.3.0.tar.gz
-SOURCE_SUM=65d9774cafbb5829b82d09b0ea0d3d5d1ec5f076fadef2b8576d29a901c58a90
-SOURCE_SUM_PRG=sha256sum
-SOURCE_FORMAT=tar.gz
-SOURCE_IN_SUBDIR=true
-SOURCE_FILENAME=
-SOURCE_EXTRACT=true

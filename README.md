@@ -33,7 +33,6 @@ A networked place to store posted web documents. This is meant to allow for dist
 
 * Official app website: <https://distbin.com/about>
 * Upstream app code repository: <https://github.com/gobengo/distbin>
-* YunoHost documentation for this app: <https://yunohost.org/app_distbin>
 * Report a bug: <https://github.com/YunoHost-Apps/distbin_ynh/issues>
 
 ## Developer info

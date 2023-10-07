@@ -50,7 +50,7 @@ ram.runtime = "50M"
     [resources.install_dir]
 
     [resources.data_dir]
-    subdirs =["distbin-db, distbin-db/activities, distbin-db/inbox"]
+    subdirs =["distbin-db/activities", "distbin-db/inbox"]
 
     [resources.permissions]
     main.url = "/"

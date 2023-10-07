@@ -20,16 +20,8 @@ A distributed pastebin. i.e. it is a service where anyone can post things on the
 
 A networked place to store posted web documents. This is meant to allow for distributed social commentary and reaction around these documents using best practices recommended or noted by the W3C Social Web Working Group.
 
-### Features
 
-- Ut enim ad minim veniam, quis nostrud exercitation ullamco ;
-- Laboris nisi ut aliquip ex ea commodo consequat ;
-- Duis aute irure dolor in reprehenderit in voluptate ;
-- Velit esse cillum dolore eu fugiat nulla pariatur ;
-- Excepteur sint occaecat cupidatat non proident, sunt in culpa."
-
-
-**Shipped version:** 1.3.0~ynh12
+**Shipped version:** 1.3.0~ynh13
 
 **Demo:** https://distbin.com/
 
@@ -37,15 +29,10 @@ A networked place to store posted web documents. This is meant to allow for dist
 
 ![Screenshot of Distbin](./doc/screenshots/screenshot.PNG)
 
-## Disclaimers / important information
-
-* No configuration parameters available for now.
-
 ## Documentation and resources
 
 * Official app website: <https://distbin.com/about>
 * Upstream app code repository: <https://github.com/gobengo/distbin>
-* YunoHost documentation for this app: <https://yunohost.org/app_distbin>
 * Report a bug: <https://github.com/YunoHost-Apps/distbin_ynh/issues>
 
 ## Developer info

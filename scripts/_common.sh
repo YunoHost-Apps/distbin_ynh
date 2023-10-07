@@ -4,10 +4,7 @@
 # COMMON VARIABLES
 #=================================================
 
-# dependencies used by the app
-pkg_dependencies="ca-certificates curl rsync"
-
-NODEJS_VERSION=10
+NODEJS_VERSION=16
 
 #=================================================
 # PERSONAL HELPERS

@@ -1,0 +1,59 @@
+packaging_format = 2
+
+id = "distbin"
+name = "Distbin"
+description.en = "Distributed pastebin with ActivityPub"
+description.fr = "Pastebin distribué utilisant le protocole ActivityPub"
+
+version = "1.3.0~ynh13"
+
+maintainers = ["yalh76"]
+
+[upstream]
+license = "Apache-2.0"
+website = "https://distbin.com/about"
+demo = "https://distbin.com/"
+code = "https://github.com/gobengo/distbin"
+
+[integration]
+yunohost = ">= 11.2"
+architectures = "all"
+multi_instance = true
+ldap = false
+sso = false
+disk = "50M"
+ram.build = "50M"
+ram.runtime = "50M"
+
+[install]
+    [install.domain]
+    type = "domain"
+
+    [install.path]
+    type = "path"
+    default = "/distbin"
+
+    [install.init_main_permission]
+    type = "group"
+    default = "visitors"
+
+[resources]
+        [resources.sources.main]
+        url = "https://github.com/gobengo/distbin/archive/v1.3.0.tar.gz"
+        sha256 = "65d9774cafbb5829b82d09b0ea0d3d5d1ec5f076fadef2b8576d29a901c58a90"
+        autoupdate.strategy = "latest_github_tag"
+
+    [resources.system_user]
+
+    [resources.ports]
+
+    [resources.install_dir]
+
+    [resources.data_dir]
+    subdirs =["distbin-db/activities", "distbin-db/inbox"]
+
+    [resources.permissions]
+    main.url = "/"
+
+    [resources.apt]
+    packages = "ca-certificates, curl, rsync"

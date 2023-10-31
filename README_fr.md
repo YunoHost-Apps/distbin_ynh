@@ -33,6 +33,7 @@ A networked place to store posted web documents. This is meant to allow for dist
 
 * Site officiel de l’app : <https://distbin.com/about>
 * Dépôt de code officiel de l’app : <https://github.com/gobengo/distbin>
+* YunoHost Store: <https://apps.yunohost.org/app/distbin>
 * Signaler un bug : <https://github.com/YunoHost-Apps/distbin_ynh/issues>
 
 ## Informations pour les développeurs

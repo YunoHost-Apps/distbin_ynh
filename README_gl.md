@@ -29,6 +29,10 @@ A networked place to store posted web documents. This is meant to allow for dist
 
 ![Captura de pantalla de Distbin](./doc/screenshots/screenshot.PNG)
 
+## :red_circle: Debes considerar
+
+- **Upstream not maintained**: This software is not maintained anymore. Expect it to break down over time, be exposed to unfixed security breaches, etc.
+
 ## Documentación e recursos
 
 - Web oficial da app: <https://distbin.com/about>

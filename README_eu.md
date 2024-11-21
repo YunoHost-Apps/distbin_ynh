@@ -5,7 +5,7 @@ EZ editatu eskuz.
 
 # Distbin YunoHost-erako
 
-[![Integrazio maila](https://dash.yunohost.org/integration/distbin.svg)](https://dash.yunohost.org/appci/app/distbin) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/distbin.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/distbin.maintain.svg)
+[![Integrazio maila](https://dash.yunohost.org/integration/distbin.svg)](https://ci-apps.yunohost.org/ci/apps/distbin/) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/distbin.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/distbin.maintain.svg)
 
 [![Instalatu Distbin YunoHost-ekin](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=distbin)
 

@@ -5,7 +5,7 @@
 
 # YunoHost 上的 Distbin
 
-[![集成程度](https://dash.yunohost.org/integration/distbin.svg)](https://dash.yunohost.org/appci/app/distbin) ![工作状态](https://ci-apps.yunohost.org/ci/badges/distbin.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/distbin.maintain.svg)
+[![集成程度](https://dash.yunohost.org/integration/distbin.svg)](https://ci-apps.yunohost.org/ci/apps/distbin/) ![工作状态](https://ci-apps.yunohost.org/ci/badges/distbin.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/distbin.maintain.svg)
 
 [![使用 YunoHost 安装 Distbin](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=distbin)
 

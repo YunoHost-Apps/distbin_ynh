@@ -5,7 +5,7 @@
 
 # YunoHost 上的 Distbin
 
-[![集成程度](https://dash.yunohost.org/integration/distbin.svg)](https://dash.yunohost.org/appci/app/distbin) ![工作状态](https://ci-apps.yunohost.org/ci/badges/distbin.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/distbin.maintain.svg)
+[![集成程度](https://dash.yunohost.org/integration/distbin.svg)](https://ci-apps.yunohost.org/ci/apps/distbin/) ![工作状态](https://ci-apps.yunohost.org/ci/badges/distbin.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/distbin.maintain.svg)
 
 [![使用 YunoHost 安装 Distbin](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=distbin)
 
@@ -21,7 +21,7 @@ A distributed pastebin. i.e. it is a service where anyone can post things on the
 A networked place to store posted web documents. This is meant to allow for distributed social commentary and reaction around these documents using best practices recommended or noted by the W3C Social Web Working Group.
 
 
-**分发版本：** 1.3.0~ynh13
+**分发版本：** 1.3.0~ynh14
 
 **演示：** <https://distbin.com/>
 

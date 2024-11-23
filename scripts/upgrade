@@ -8,7 +8,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 ynh_script_progression "Stopping $app's systemd service..."
 
-ynh_systemctl --service=$app --action="stop" --log_path=systemd --wait_until="Stopped"
+ynh_systemctl --service=$app --action="stop" --log_path=systemd
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -91,7 +91,7 @@ yunohost service add $app --description="Distributed pastebin" --log="/var/log/$
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemctl --service=$app --action="start" --log_path=systemd --wait_until="Started"
+ynh_systemctl --service=$app --action="start" --log_path=systemd
 
 if ynh_in_ci_tests; then
 	sleep 60

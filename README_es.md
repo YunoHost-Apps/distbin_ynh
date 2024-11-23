@@ -5,7 +5,7 @@ No se debe editar a mano.
 
 # Distbin para Yunohost
 
-[![Nivel de integración](https://dash.yunohost.org/integration/distbin.svg)](https://dash.yunohost.org/appci/app/distbin) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/distbin.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/distbin.maintain.svg)
+[![Nivel de integración](https://dash.yunohost.org/integration/distbin.svg)](https://ci-apps.yunohost.org/ci/apps/distbin/) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/distbin.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/distbin.maintain.svg)
 
 [![Instalar Distbin con Yunhost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=distbin)
 
@@ -21,7 +21,7 @@ A distributed pastebin. i.e. it is a service where anyone can post things on the
 A networked place to store posted web documents. This is meant to allow for distributed social commentary and reaction around these documents using best practices recommended or noted by the W3C Social Web Working Group.
 
 
-**Versión actual:** 1.3.0~ynh13
+**Versión actual:** 1.3.0~ynh14
 
 **Demo:** <https://distbin.com/>
 
@@ -42,7 +42,7 @@ A networked place to store posted web documents. This is meant to allow for dist
 
 ## Información para desarrolladores
 
-Por favor enviar sus correcciones a la [`branch testing`](https://github.com/YunoHost-Apps/distbin_ynh/tree/testing
+Por favor enviar sus correcciones a la [rama `testing`](https://github.com/YunoHost-Apps/distbin_ynh/tree/testing).
 
 Para probar la rama `testing`, sigue asÍ:
 

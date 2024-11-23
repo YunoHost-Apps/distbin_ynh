@@ -5,7 +5,7 @@ It shall NOT be edited by hand.
 
 # Distbin for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/distbin.svg)](https://dash.yunohost.org/appci/app/distbin) ![Working status](https://ci-apps.yunohost.org/ci/badges/distbin.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/distbin.maintain.svg)
+[![Integration level](https://dash.yunohost.org/integration/distbin.svg)](https://ci-apps.yunohost.org/ci/apps/distbin/) ![Working status](https://ci-apps.yunohost.org/ci/badges/distbin.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/distbin.maintain.svg)
 
 [![Install Distbin with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=distbin)
 

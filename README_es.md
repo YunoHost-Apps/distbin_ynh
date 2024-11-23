@@ -5,7 +5,7 @@ No se debe editar a mano.
 
 # Distbin para Yunohost
 
-[![Nivel de integración](https://dash.yunohost.org/integration/distbin.svg)](https://dash.yunohost.org/appci/app/distbin) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/distbin.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/distbin.maintain.svg)
+[![Nivel de integración](https://dash.yunohost.org/integration/distbin.svg)](https://ci-apps.yunohost.org/ci/apps/distbin/) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/distbin.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/distbin.maintain.svg)
 
 [![Instalar Distbin con Yunhost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=distbin)
 
@@ -42,7 +42,7 @@ A networked place to store posted web documents. This is meant to allow for dist
 
 ## Información para desarrolladores
 
-Por favor enviar sus correcciones a la [`branch testing`](https://github.com/YunoHost-Apps/distbin_ynh/tree/testing
+Por favor enviar sus correcciones a la [rama `testing`](https://github.com/YunoHost-Apps/distbin_ynh/tree/testing).
 
 Para probar la rama `testing`, sigue asÍ:
 

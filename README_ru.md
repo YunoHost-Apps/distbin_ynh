@@ -5,7 +5,9 @@
 
 # Distbin для YunoHost
 
-[![Уровень интеграции](https://dash.yunohost.org/integration/distbin.svg)](https://ci-apps.yunohost.org/ci/apps/distbin/) ![Состояние работы](https://ci-apps.yunohost.org/ci/badges/distbin.status.svg) ![Состояние сопровождения](https://ci-apps.yunohost.org/ci/badges/distbin.maintain.svg)
+[![Уровень интеграции](https://apps.yunohost.org/badge/integration/distbin)](https://ci-apps.yunohost.org/ci/apps/distbin/)
+![Состояние работы](https://apps.yunohost.org/badge/state/distbin)
+![Состояние сопровождения](https://apps.yunohost.org/badge/maintained/distbin)
 
 [![Установите Distbin с YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=distbin)
 

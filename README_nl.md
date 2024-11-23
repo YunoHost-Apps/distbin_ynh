@@ -5,7 +5,9 @@ Hij mag NIET handmatig aangepast worden.
 
 # Distbin voor Yunohost
 
-[![Integratieniveau](https://dash.yunohost.org/integration/distbin.svg)](https://ci-apps.yunohost.org/ci/apps/distbin/) ![Mate van functioneren](https://ci-apps.yunohost.org/ci/badges/distbin.status.svg) ![Onderhoudsstatus](https://ci-apps.yunohost.org/ci/badges/distbin.maintain.svg)
+[![Integratieniveau](https://apps.yunohost.org/badge/integration/distbin)](https://ci-apps.yunohost.org/ci/apps/distbin/)
+![Mate van functioneren](https://apps.yunohost.org/badge/state/distbin)
+![Onderhoudsstatus](https://apps.yunohost.org/badge/maintained/distbin)
 
 [![Distbin met Yunohost installeren](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=distbin)
 

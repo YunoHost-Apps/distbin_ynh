@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
 source _common.sh
 source /usr/share/yunohost/helpers
 
@@ -15,30 +19,34 @@ ynh_nodejs_install
 #=================================================
 ynh_script_progression "Setting up source files..."
 
+# Download, check integrity, uncompress and patch the source from manifest.toml
 ynh_setup_source --dest_dir="$install_dir"
 
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "$install_dir"
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:$app "$install_dir"
 #=================================================
-# SETUP SYSTEMD
+# APP INITIAL CONFIGURATION
 #=================================================
-ynh_script_progression "Configuring $app's systemd service..."
+ynh_script_progression "Adding $app's configuration files..."
 
-# Create a dedicated NGINX config
+ynh_config_add --template=".env" --destination="$install_dir/.env"
+
+chmod 400 "$install_dir/.env"
+chown "$app:$app" "$install_dir/.env"
+
+#=================================================
+# SYSTEM CONFIGURATION
+#=================================================
+ynh_script_progression "Adding system configurations related to $app..."
+
+# Create a dedicated NGINX config using the conf/nginx.conf template
 ynh_config_add_nginx
 
 # Create a dedicated systemd config
 ynh_config_add_systemd
 
+yunohost service add "$app" --description="Distributed pastebin" --log="/var/log/$app/$app.log"
+
 # Use logrotate to manage application logfile(s)
 ynh_config_add_logrotate
-
-yunohost service add $app --description="Distributed pastebin" --log="/var/log/$app/$app.log"
-
-mkdir -p "/var/log/$app"
-#REMOVEME? Assuming ynh_config_add_logrotate is called, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 750 "/var/log/$app"
-#REMOVEME? Assuming ynh_config_add_logrotate is called, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "/var/log/$app"
-#REMOVEME? Assuming ynh_config_add_logrotate is called, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:$app "/var/log/$app"
 
 #=================================================
 # SPECIFIC SETUP
@@ -48,26 +56,14 @@ mkdir -p "/var/log/$app"
 ynh_script_progression "Installing Distbin..."
 
 pushd $install_dir
-
-	ynh_hide_warnings ynh_exec_as_app node_load_PATH npm install --ignore-scripts
-	ynh_hide_warnings ynh_exec_as_app node_load_PATH npm run build
+	ynh_hide_warnings ynh_exec_as_app npm install --ignore-scripts
+	ynh_hide_warnings ynh_exec_as_app npm run build
 	ynh_hide_warnings ynh_exec_as_app cp -af package* dist/
-
 popd
 
 pushd $install_dir/dist
-	ynh_hide_warnings ynh_exec_as_app node_load_PATH npm install --ignore-scripts --production
+	ynh_hide_warnings ynh_exec_as_app npm install --ignore-scripts --production
 popd
-
-#=================================================
-# ADD A CONFIGURATION
-#=================================================
-ynh_script_progression "Adding $app's configuration..."
-
-ynh_config_add --template=".env" --destination="$install_dir/.env"
-
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 400 "$install_dir/.env"
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown $app:$app "$install_dir/.env"
 
 #=================================================
 # START SYSTEMD SERVICE
@@ -75,7 +71,7 @@ ynh_config_add --template=".env" --destination="$install_dir/.env"
 ynh_script_progression "Starting $app's systemd service..."
 
 # Start a systemd service
-ynh_systemctl --service=$app --action="start" --log_path=systemd
+ynh_systemctl --service="$app" --action="start" --log_path=systemd
 
 if ynh_in_ci_tests; then
 	sleep 60

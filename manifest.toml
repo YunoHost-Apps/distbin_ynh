@@ -16,11 +16,15 @@ demo = "https://distbin.com/"
 code = "https://github.com/gobengo/distbin"
 
 [integration]
-yunohost = ">= 11.2"
+yunohost = ">= 11.2.30"
+helpers_version = "2.1"
 architectures = "all"
 multi_instance = true
+
 ldap = false
+
 sso = false
+
 disk = "50M"
 ram.build = "50M"
 ram.runtime = "50M"
@@ -38,14 +42,14 @@ ram.runtime = "50M"
     default = "visitors"
 
 [resources]
-        [resources.sources.main]
-        url = "https://github.com/gobengo/distbin/archive/v1.3.0.tar.gz"
-        sha256 = "65d9774cafbb5829b82d09b0ea0d3d5d1ec5f076fadef2b8576d29a901c58a90"
-        autoupdate.strategy = "latest_github_tag"
+
+    [resources.sources]
+    [resources.sources.main]
+    url = "https://github.com/gobengo/distbin/archive/v1.3.0.tar.gz"
+    sha256 = "65d9774cafbb5829b82d09b0ea0d3d5d1ec5f076fadef2b8576d29a901c58a90"
+    autoupdate.strategy = "latest_github_tag"
 
     [resources.system_user]
-
-    [resources.ports]
 
     [resources.install_dir]
 
@@ -54,6 +58,8 @@ ram.runtime = "50M"
 
     [resources.permissions]
     main.url = "/"
+
+    [resources.ports]
 
     [resources.apt]
     packages = "ca-certificates, curl, rsync"

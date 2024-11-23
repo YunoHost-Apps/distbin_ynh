@@ -5,7 +5,9 @@ Il NE doit PAS être modifié à la main.
 
 # Distbin pour YunoHost
 
-[![Niveau d’intégration](https://dash.yunohost.org/integration/distbin.svg)](https://dash.yunohost.org/appci/app/distbin) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/distbin.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/distbin.maintain.svg)
+[![Niveau d’intégration](https://apps.yunohost.org/badge/integration/distbin)](https://ci-apps.yunohost.org/ci/apps/distbin/)
+![Statut du fonctionnement](https://apps.yunohost.org/badge/state/distbin)
+![Statut de maintenance](https://apps.yunohost.org/badge/maintained/distbin)
 
 [![Installer Distbin avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=distbin)
 
@@ -21,7 +23,7 @@ A distributed pastebin. i.e. it is a service where anyone can post things on the
 A networked place to store posted web documents. This is meant to allow for distributed social commentary and reaction around these documents using best practices recommended or noted by the W3C Social Web Working Group.
 
 
-**Version incluse :** 1.3.0~ynh13
+**Version incluse :** 1.3.0~ynh14
 
 **Démo :** <https://distbin.com/>
 
